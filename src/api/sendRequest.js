@@ -1,33 +1,23 @@
-import {
-  responseDataEmpty,
-  responseContainErrors,
-  GraphQLResponseException,
-} from './utility';
-import env from '../utils/env';
-import { config } from '../config';
-import RootElement from '../utils/rootElement';
-import LocalStorage from '../utils/localStorage';
-import { SET_PAGE_MESSAGE } from '../context/App/page/types';
+import { config } from "../config";
+import LocalStorage from "../utils/localStorage";
+import { SET_PAGE_MESSAGE } from "../context/App/page/types";
+import { responseDataEmpty, responseContainErrors } from "./utility";
 
-export const RESPONSE_TEXT = 'text';
-export const RESPONSE_JSON = 'json';
-
-const storeCode = env.storeCode || RootElement.getStoreCode();
+export const RESPONSE_TEXT = "text";
+export const RESPONSE_JSON = "json";
 
 export default function sendRequest(
   dispatch,
   queryParams = {},
   relativeUrl,
-  responseType = 'json',
+  responseType = "json",
   additionalHeaders = {}
 ) {
   const headers = {
-    'Content-Type': 'application/json',
-    Store: storeCode,
     ...additionalHeaders,
   };
-  const token = LocalStorage.getCustomerToken();
-  const url = `${config.baseUrl}${relativeUrl || '/graphql'}`;
+  const token = LocalStorage.getUserToken();
+  const url = `${config.baseUrl}${relativeUrl}`;
 
   if (token) {
     headers.Authorization = `Bearer ${token}`;
@@ -35,7 +25,7 @@ export default function sendRequest(
 
   return fetch(url, {
     headers,
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({ ...queryParams }),
   })
     .then((response) => {
@@ -49,16 +39,17 @@ export default function sendRequest(
         return response;
       }
 
-      const exception = new GraphQLResponseException(response);
-
       dispatch({
         type: SET_PAGE_MESSAGE,
-        payload: { type: 'error', message: exception.message },
+        payload: { type: "error", message: response?.error?.message || "Something went wrong" },
       });
-      throw exception;
     })
-    .catch((exception) => {
-      console.error(exception);
-      throw exception;
+    .catch((err) => {
+      dispatch({
+        type: SET_PAGE_MESSAGE,
+        payload: { type: "error", message: "Something went wrong" },
+      });
+      console.error(err);
+      throw err;
     });
 }

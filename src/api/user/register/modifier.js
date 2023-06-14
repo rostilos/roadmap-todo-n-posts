@@ -1,8 +1,7 @@
-export default function ajaxLoginModifier(response) {
-  const { customerData, ...result } = response;
+export default function registerModifier(response) {
+  const { ...result } = response;
 
   return {
     ...result,
-    data: customerData,
   };
 }

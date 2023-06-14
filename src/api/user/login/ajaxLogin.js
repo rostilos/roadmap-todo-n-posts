@@ -1,24 +1,9 @@
-export default async function ajaxLogin(loginData) {
-  try {
-    await fetch('http://dev.roadmap.com/api/login', {
-      method: 'POST',
-      body: JSON.stringify(loginData),
-    })
-      .then((respose) => {
-        if (respose.ok) {
-          return respose.json()
-        }
-        throw new Error('error')
-      })
-      .then((data) => {
-        if (data.status) {
-          localStorage.setItem('token', data.status)
-          // navigate('/')
-        } else {
-          //set error
-        }
-      })
-  } catch (error) {
-    console.log(error.message)
-  }
+import modifier from "./modifier";
+import sendRequest, { RESPONSE_JSON } from "../../sendRequest";
+
+export default async function ajaxLogin(dispatch, loginData) {
+  const relativeUrl = "api/login";
+  const result = await sendRequest(dispatch, loginData, relativeUrl, RESPONSE_JSON, {}, true);
+
+  return modifier(result);
 }

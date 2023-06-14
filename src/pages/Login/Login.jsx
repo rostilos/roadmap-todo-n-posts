@@ -1,58 +1,53 @@
-import React from "react";
-import register from "../../api/user/register/register";
-import ajaxLogin from "../../api/user/login";
+import React, { useState } from "react";
+import useAppContext from "../../hook/useAppContext";
+import LoginForm from "./LoginForm";
+import LoginTabs from "./LoginTabs";
+import RegisterForm from "./RegisterForm";
 
 const Login = function () {
-  const submitLoginHandler = () => {
-    const loginData = {
-      email: "rostilosfl@gmail.com",
-      password: "123123qwe",
+  const { ajaxLogin, register } = useAppContext();
+  const [activeTab, setActiveTab] = useState(0);
+
+  const submitLoginHandler = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const userData = {
+      email: formData.get("email"),
+      password: formData.get("password"),
     };
-    ajaxLogin(loginData);
+    // rostilosfl@gmail.com; 123123qwe;
+    try {
+      const loginResponse = await ajaxLogin(userData);
+      const loggedIn = !!loginResponse?.status;
+      console.log(`login status: ${loggedIn}`);
+    } catch (error) {
+      // setPageLoader(false);
+      console.error(error);
+    }
   };
-  const submitHandler = () => {
-    const user = {
-      firstname: "Rostislav",
-      lastname: "Sulejmanov",
-      password: "123123qwe",
-      birth_date: "15/09/1999",
-      email: "rostilosfl@gmail.com",
+  const submitRegisterHandler = (event) => {
+    const formData = new FormData(event.target);
+    const userData = {
+      firstname: formData.get("firstname"),
+      lastname: formData.get("lastname"),
+      password: formData.get("password"),
+      birth_date: formData.get("birth_date"),
+      email: formData.get("email"),
     };
-    register(user);
+    const registerResponse = register(userData);
+    const status = !!registerResponse?.status;
+    console.log(`registered status : ${status}`);
+  };
+  const handleFormChange = (id) => {
+    setActiveTab(id);
   };
   return (
-    <div>
-      <h1>Login</h1>
-      <br />
-      <form>
-        <input type="text" />
-        <br />
-        <input type="password" name="" id="" />
-        <button onClick={submitLoginHandler} type="button">
-          Login
-        </button>
-      </form>
-      <h1>Register</h1>
-      <br />
-      <form>
-        Firstname
-        <input type="text" />
-        <br />
-        Lastname
-        <input type="text" />
-        <br />
-        Date of Birth
-        <input type="date" name="date" id="" />
-        <br />
-        Password
-        <input type="password" name="password" id="" />
-        <br />
-        Email
-        <input type="email" name="email" id="" />
-        <button onClick={submitHandler} type="button">
-          Submit
-        </button>
-      </form>
+    <div className="login-page">
+      <LoginTabs changeHandler={handleFormChange} activeTab={activeTab} />
+      <div className="login-page__content">
+        {activeTab === 0 && <LoginForm submitLoginHandler={submitLoginHandler} />}
+        {activeTab === 1 && <RegisterForm submitRegisterHandler={submitRegisterHandler} />}
+      </div>
     </div>
   );
 };

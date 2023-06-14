@@ -1,32 +1,13 @@
-import {
-  SET_CURRENT_MONTH,
-  SET_CURRENT_YEAR,
-  SET_SELECTED_DATE,
-} from './calendar/types';
-import {
-  setCurrentMonth,
-  setCurrentYear,
-  setSelectedDate,
-} from './calendar/reducers';
+import { UPDATE_USER_LOGGEDIN_STATUS } from "./user/types";
+import { setUserLoggedInStatusReducer } from "./user/reducers";
 
-import {
-  SET_NOTES_DATA,
-  SET_SHOW_NOTES,
-  SET_SHOW_ALL_NOTES,
-} from './notes/types';
-import {
-  setNotesData,
-  setShowNotesContent,
-  setShowAllNotes,
-} from './notes/reducers';
+import { setPageLoader, setPageMessage } from './page/reducers';
+import { SET_PAGE_LOADER, SET_PAGE_MESSAGE } from './page/types';
 
 const actions = {
-  [SET_CURRENT_MONTH]: setCurrentMonth,
-  [SET_CURRENT_YEAR]: setCurrentYear,
-  [SET_NOTES_DATA]: setNotesData,
-  [SET_SHOW_NOTES]: setShowNotesContent,
-  [SET_SELECTED_DATE]: setSelectedDate,
-  [SET_SHOW_ALL_NOTES]: setShowAllNotes,
+  [UPDATE_USER_LOGGEDIN_STATUS]: setUserLoggedInStatusReducer,
+  [SET_PAGE_LOADER]: setPageLoader,
+  [SET_PAGE_MESSAGE]: setPageMessage,
 };
 
 export default function appReducer(state, { type, payload }) {

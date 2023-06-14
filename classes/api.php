@@ -46,8 +46,8 @@ if ($action === 'register') {
         $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
         $payload = ['user' => $user];
         $jwt = generate_jwt($headers, $payload);
-        // return_json(['status' => $jwt]);
-        return_json(['status' => $payload['user']]);
+        return_json(['status' => $jwt]);
+        // return_json(['status' => $payload['user']]);
     }
 } elseif ($action === 'user') {
     if ($is_jwt_valid) {

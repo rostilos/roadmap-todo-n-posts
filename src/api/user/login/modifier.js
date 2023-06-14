@@ -1,8 +1,6 @@
 export default function ajaxLoginModifier(response) {
-  const { customerData, ...result } = response;
-
+  const { ...result } = response;
   return {
     ...result,
-    data: customerData,
   };
 }

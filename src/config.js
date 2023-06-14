@@ -1,3 +1,3 @@
 export const config = {
-  dbEndpoint: 'http://localhost:3000',
+  baseUrl: 'http://dev.roadmap.com/',
 };
