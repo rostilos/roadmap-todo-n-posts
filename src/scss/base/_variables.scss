@@ -1,0 +1,38 @@
+// Colors:
+$accept-green: #81b214;
+$common-red: #de1818;
+
+$blue-dark: #022c43;
+$blue-medium: #053f5e;
+$blue-semilight: #115173;
+$blue-semitransparent: rgba(17, 81, 115, 0.2);
+$blue-transparent: rgba(17, 81, 115, 0.1);
+
+$yellow: #ffd700;
+
+$page-bg: #eeeeee;
+$section-bg: #ffffff;
+
+$input-bg: rgba(108, 108, 108, 0.04);
+$input-disabled-bg: rgba(216, 216, 216, 0.31);
+
+$text-common: rgba(50, 63, 75, 1);
+
+// Screen sizes
+$screen-2xl : 1366px;
+$screen-xl : 1200px;
+$screen-lg : 960px;
+$screen-md : 767.98px;
+$screen-sm : 576px;
+$screen-xsm : 480px;
+
+// Corner radius
+$border-md: 14px;
+$border-sm: 6px;
+
+// animation rule
+$animation: all .4s ease-in-out;
+
+// Shadows
+$shadow-md: 0px 2px 4px rgba(0, 0, 0, 0.09);
+$shadow-inset: inset 2px 4px rgba(0, 0, 0, 0.09);

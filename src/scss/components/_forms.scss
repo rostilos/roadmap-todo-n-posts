@@ -1,0 +1,15 @@
+._input {
+  transition: $animation;
+  background: $blue-transparent;
+  display: flex;
+    align-items: center;
+  &:focus {
+    border:1px solid $blue-semilight;
+  }
+  box-shadow: $shadow-md;
+  border-radius: $border-md;
+  padding: 10px;
+  min-width: 200px;
+  height: 24px;
+  margin-bottom: 16px;
+}

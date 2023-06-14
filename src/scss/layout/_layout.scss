@@ -1,0 +1,29 @@
+body{
+  background-color: $page-bg;
+}
+.page {
+  &__content{
+    
+  }
+  &__sidebar{
+
+  }
+}
+.grid-3-cols{
+  display: grid;
+  grid-template-columns: 198px 1fr 340px;
+}
+.grid-2-cols{
+  display: grid;
+  grid-template-columns: 198px 1fr;
+}
+
+/* Стили для ограничивающего контейнера на странице */
+._container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 130px;
+  @media screen and (max-width: $screen-2xl) {
+      padding: 0 24px;
+  }
+}
