@@ -14,9 +14,7 @@ import {
   UPDATE_USER_DATA,
   UPDATE_USER_LOGGEDIN_STATUS,
 } from "./types";
-// import { _cleanObjByKeys } from '../../../utils';
 import LocalStorage from "../../../utils/localStorage";
-import { config } from "../../../config";
 import { isEmpty } from "lodash";
 
 export function setLoggedInStatusAction(dispatch, status) {
@@ -48,22 +46,20 @@ export async function registerAction(dispatch, userData) {
   try {
     const response = await registerRequest(dispatch, userData);
     const { errors, status } = response;
-
     if (!errors && status) {
       const signInToken = status;
-      // LocalStorage.saveUserToken(signInToken);
-      if (typeof window !== "undefined") {
-        // window.location.reload();
-      }
+      LocalStorage.saveUserToken(signInToken);
+      setLoggedInStatusAction(dispatch, true);
+      return signInToken;
     }
-    // setLoggedInStatusAction(dispatch, !!status);
-
-    // return false;
+    LocalStorage.removeUserDataFromStorage();
+    setLoggedInStatusAction(dispatch, false);
   } catch (error) {
+    LocalStorage.removeUserDataFromStorage();
+    setLoggedInStatusAction(dispatch, false);
     console.error(error);
   }
-
-  return {};
+  return false;
 }
 
 export function setCustomerDataFromTokenAction(dispatch) {

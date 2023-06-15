@@ -33,7 +33,8 @@ const Login = function () {
       console.error(error);
     }
   };
-  const submitRegisterHandler = (event) => {
+  const submitRegisterHandler = async (event) => {
+    event.preventDefault();
     const formData = new FormData(event.target);
     const userData = {
       firstname: formData.get("firstname"),
@@ -42,9 +43,18 @@ const Login = function () {
       birth_date: formData.get("birth_date"),
       email: formData.get("email"),
     };
-    const registerResponse = register(userData);
-    const status = !!registerResponse?.status;
-    console.log(`registered status : ${status}`);
+    try {
+      const userToken = await register(userData);
+      if (userToken) {
+        setSuccessMessage("You have successfully registered your account");
+        navigate("/");
+      } else {
+        setErrorMessage("Something went wrong. Check data");
+      }
+    } catch (error) {
+      setErrorMessage("Something went wrong. Check data");
+      console.error(error);
+    }
   };
   const handleFormChange = (id) => {
     setActiveTab(id);
