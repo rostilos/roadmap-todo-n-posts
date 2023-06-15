@@ -2,11 +2,15 @@ import { isEmpty } from "lodash";
 
 const LocalStorage = {
   getUserToken() {
-    return !isEmpty(JSON.parse(window.localStorage.getItem("token") || {}));
+    const userToken = window.localStorage.getItem("token") || null;
+    return userToken;
   },
   saveUserToken(data) {
     window.localStorage.setItem("token", JSON.stringify(data));
   },
+  removeUserDataFromStorage(){
+    window.localStorage.removeItem("token");
+  }
 };
 
 export default LocalStorage;

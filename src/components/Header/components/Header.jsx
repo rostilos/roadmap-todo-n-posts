@@ -1,5 +1,6 @@
 import React from "react";
-import logo from '../../../assets/images/logo.svg'
+import logo from "../../../assets/images/logo.svg";
+import LogInOutButton from "./LogInOutButton";
 
 const Header = function () {
   return (
@@ -9,11 +10,10 @@ const Header = function () {
           <img src={logo} alt="" />
         </div>
         <div className="header__user-info user-info">
-          Log in
+          <LogInOutButton />
           <img src="" alt="" />
         </div>
       </div>
-      
     </header>
   );
 };

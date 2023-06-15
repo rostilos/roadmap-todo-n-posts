@@ -1,4 +1,10 @@
-import { setLoggedInStatusAction, ajaxLoginAction, registerAction } from "./user/actions";
+import {
+  setLoggedInStatusAction,
+  ajaxLoginAction,
+  registerAction,
+  setCustomerDataFromTokenAction,
+  clearCustomerDataAction,
+} from "./user/actions";
 import { setMessageAction, setPageLoaderAction, setErrorMessageAction, setSuccessMessageAction } from "./page/actions";
 const dispatchMapper = {
   setLoggedInStatus: setLoggedInStatusAction,
@@ -8,6 +14,8 @@ const dispatchMapper = {
   setErrorMessage: setErrorMessageAction,
   setSuccessMessage: setSuccessMessageAction,
   register: registerAction,
+  setCustomerDataFromToken: setCustomerDataFromTokenAction,
+  clearCustomerData: clearCustomerDataAction,
 };
 
 export default function appDispatcher(dispatch) {

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAppContext from "../../hook/useAppContext";
 import LoginForm from "./LoginForm";
 import LoginTabs from "./LoginTabs";
 import RegisterForm from "./RegisterForm";
 
 const Login = function () {
-  const { ajaxLogin, register } = useAppContext();
+  const { ajaxLogin, register, setErrorMessage, setSuccessMessage } = useAppContext();
   const [activeTab, setActiveTab] = useState(0);
+  const navigate = useNavigate();
 
   const submitLoginHandler = async (event) => {
     event.preventDefault();
@@ -19,6 +21,12 @@ const Login = function () {
     try {
       const loginResponse = await ajaxLogin(userData);
       const loggedIn = !!loginResponse?.status;
+      if (loggedIn) {
+        setSuccessMessage("You are successfully logged in!");
+        navigate("/");
+      } else {
+        setErrorMessage("Something went wrong. Check login data");
+      }
       console.log(`login status: ${loggedIn}`);
     } catch (error) {
       // setPageLoader(false);
