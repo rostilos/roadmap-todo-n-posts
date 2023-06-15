@@ -12,8 +12,8 @@ function App() {
     <div className="page">
       <Header />{" "}
       <div className="page__container _container">
+        <Message />
         <main className="page__content grid-3-cols">
-          <Message />
           <Sidebar />
           <BrowserRouter>
             <Router />

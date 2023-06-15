@@ -1,0 +1,31 @@
+.message{
+    display: block;
+    position: sticky;
+    padding: 6px;
+    top: 0;
+    &__content{
+        position: relative;
+        padding: 8px 20px;
+        color: #fff;
+        border-radius: $border-sm;
+        &--error{
+            background-color: $common-red;
+        }
+        &--success{
+            background-color: $accept-green;
+        }
+    }
+    &__close{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+        margin-right: 8px;
+        font-weight: 600;
+        background-color: transparent;
+        color: #fff;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
