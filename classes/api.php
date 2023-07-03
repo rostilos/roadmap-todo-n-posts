@@ -56,6 +56,25 @@ if ($action === 'register') {
             return_json(['status' => $user]);
         }
     }
+} elseif($action === 'create_note') {
+    $rest_json = file_get_contents('php://input');
+    $_POST = json_decode($rest_json, true);
+    $postData = [
+        'title' => $_POST['title'],
+        'content' => $_POST['content'],
+        'priority' => $_POST['priority'],
+        'created_at' => date('Y-m-d'),
+    ];
+    if ($is_jwt_valid) {
+        $userId = getPayload($bearer_token)->user->id;
+        if (!$userId) {
+            return false;
+        }
+        if ($postId = $database->createNote($userId, $postData)) {
+            return_json(['status' => 'success']);
+        }
+        return false;
+    }
 }
 return_json(['status' => 0]);
 

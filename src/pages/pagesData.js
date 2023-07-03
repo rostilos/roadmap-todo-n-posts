@@ -1,4 +1,5 @@
 import Login from "../pages/Login/Login";
+import Notes from "./Notes/Notes";
 import UserAccount from "./UserAccount/UserAccount";
 // import Notes from "../pages/Notes/Notes";
 // import PostList from "../pages/Posts/PostList";
@@ -16,11 +17,11 @@ const pagesData = [
     element: <UserAccount />,
     title: "user Account",
   },
-  // {
-  //   path: "notes",
-  //   element: <About />,
-  //   title: "notes"
-  // }
+  {
+    path: "/notes",
+    element: <Notes/>,
+    title: "notes"
+  }
 ];
 
 export default pagesData;

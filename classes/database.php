@@ -4,7 +4,7 @@ class Database
 {
     private $server_name = 'localhost';
     private $database_username = 'root';
-    private $database_password = '';
+    private $database_password = '12117aA';
     private $database_name = 'roadmap';
     private $connection = null;
 
@@ -85,6 +85,37 @@ class Database
             $sql->close();
             $this->connection->close();
             return $user;
+        }
+        $sql->close();
+        $this->connection->close();
+        return false;
+    }
+
+    public function createNote($userId, $postData)
+    {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+        $sql = $this->connection->prepare(
+            'INSERT INTO user_notes (`user_id`, `title`, `content`, `priority`, `created_at`) VALUES (?,?,?,?,?)'
+        );
+        $sql->bind_param(
+            'sssss',
+            $userId,
+            $postData['title'],
+            $postData['content'],
+            $postData['priority'],
+            $postData['created_at']
+        );
+        if ($sql->execute()) {
+            $id = $this->connection->insert_id;
+            $sql->close();
+            $this->connection->close();
+            return $id;
         }
         $sql->close();
         $this->connection->close();
