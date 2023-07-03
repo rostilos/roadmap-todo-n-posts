@@ -14,8 +14,8 @@ function App() {
       <div className="page__container _container">
         <Message />
         <main className="page__content grid-3-cols">
-          <Sidebar />
           <BrowserRouter>
+            <Sidebar />
             <Router />
           </BrowserRouter>
           <LastUpdates />
