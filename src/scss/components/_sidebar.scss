@@ -1,0 +1,23 @@
+.sidebar {
+}
+.nav-sidebar {
+  &__item {
+    min-height: 32px;
+    padding: 5px;
+    button {
+
+    padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+  &__icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+  }
+}

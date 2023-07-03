@@ -6,12 +6,13 @@ body{
     
   }
   &__sidebar{
-
+    padding: 16px;
   }
 }
 .grid-3-cols{
   display: grid;
   grid-template-columns: 198px 1fr 340px;
+  column-gap: 16px;
 }
 .grid-2-cols{
   display: grid;

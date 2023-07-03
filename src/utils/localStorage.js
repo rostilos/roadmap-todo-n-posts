@@ -6,7 +6,7 @@ const LocalStorage = {
     return userToken;
   },
   saveUserToken(data) {
-    window.localStorage.setItem("token", JSON.stringify(data));
+    window.localStorage.setItem("token", data);
   },
   removeUserDataFromStorage(){
     window.localStorage.removeItem("token");
