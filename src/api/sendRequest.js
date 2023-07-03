@@ -20,7 +20,7 @@ export default function sendRequest(
   const url = `${config.baseUrl}${relativeUrl}`;
 
   if (token) {
-    headers.Authorization = `Bearer ${token}`;
+    headers.Authorization = 'Bearer ' + token;
   }
 
   return fetch(url, {
