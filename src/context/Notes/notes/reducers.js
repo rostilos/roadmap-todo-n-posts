@@ -1,12 +1,6 @@
-export function setUserLoggedInStatusReducer(state, status) {
+export function fetchNotesReducer(state, userNotes) {
   return {
     ...state,
-    isLoggedIn: status,
-  };
-}
-export function setCustomerDataReducer(state, userData) {
-  return {
-    ...state,
-    userData: userData,
+    userNotes: userNotes,
   };
 }

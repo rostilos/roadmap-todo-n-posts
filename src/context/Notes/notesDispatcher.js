@@ -1,10 +1,8 @@
+import { fetchNotesAction, createNoteAction } from "./notes/actions";
 
-import { setMessageAction, setPageLoaderAction, setErrorMessageAction, setSuccessMessageAction } from "./notes/actions";
 const dispatchMapper = {
-  setMessage: setMessageAction,
-  setPageLoader: setPageLoaderAction,
-  setErrorMessage: setErrorMessageAction,
-  setSuccessMessage: setSuccessMessageAction,
+  fetchNotes: fetchNotesAction,
+  createNote: createNoteAction,
 };
 
 export default function notesDispatcher(dispatch) {

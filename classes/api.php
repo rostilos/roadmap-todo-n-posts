@@ -75,6 +75,17 @@ if ($action === 'register') {
         }
         return false;
     }
+} elseif($action === 'user_notes') {
+    if ($is_jwt_valid) {
+        $userId = getPayload($bearer_token)->user->id;
+        if (!$userId) {
+            return false;
+        }
+        if ($userNotes = $database->getUserNotes($userId)) {
+            return_json($userNotes);
+        }
+        return false;   
+    }
 }
 return_json(['status' => 0]);
 

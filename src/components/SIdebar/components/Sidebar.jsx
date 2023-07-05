@@ -17,8 +17,9 @@ const Sidebar = function () {
   } else {
     filteredSidebarItems = sidebarItems;
   }
+  const isActive = false;
   const sidebarElements = filteredSidebarItems.map(({ label, icon, path }) => {
-    return <SidebarItem handleClick={handleClick} key={label} label={label} path={path} icon={icon} />;
+    return <SidebarItem handleClick={handleClick} key={label} label={label} path={path} icon={icon} isActive={isActive} />;
   });
   return (
     <aside className="page__sidebar sidebar _section">

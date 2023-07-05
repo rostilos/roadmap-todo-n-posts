@@ -9,7 +9,7 @@ const Login = function () {
   const { ajaxLogin, register, setErrorMessage, setSuccessMessage } = useAppContext();
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
-
+console.log('render');
   const submitLoginHandler = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);

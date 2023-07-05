@@ -122,6 +122,40 @@ class Database
         return false;
     }
 
+    public function getUserNotes($userId)
+    {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+        $sql = $this->connection->prepare(
+            'SELECT DISTINCT * FROM `user_notes` WHERE `user_id`=?'
+        );
+        $sql->bind_param('s', $userId);
+        $sql->execute();
+        $userNotes = [];
+        $result = $sql->get_result();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_array()) {
+                array_push($userNotes, [
+                    'id' => $row['id'],
+                    'title' => $row['title'],
+                    'content' => $row['content'],
+                    'priority' => $row['priority'],
+                ]);
+            }
+            $sql->close();
+            $this->connection->close();
+            return $userNotes;
+        }
+        $sql->close();
+        $this->connection->close();
+        return false;
+    }
+
     // public function updateUser($user)
     // {
     //     $this->connection = new mysqli(

@@ -3,12 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import AppDataProvider from "./context/App/AppDataProvider";
+import NotesDataProvider from "./context/Notes/NotesDataProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AppDataProvider>
-      <App />
+      <NotesDataProvider>
+        <App />
+      </NotesDataProvider>
     </AppDataProvider>
   </React.StrictMode>
 );
