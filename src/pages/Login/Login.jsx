@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAppContext from "../../hook/useAppContext";
-import LoginForm from "./LoginForm";
-import LoginTabs from "./LoginTabs";
-import RegisterForm from "./RegisterForm";
+import LoginForm from "../../components/Login/LoginForm";
+import LoginTabs from "../../components/Login/LoginTabs";
+import RegisterForm from "../../components/Login/RegisterForm";
 
 const Login = function () {
   const { ajaxLogin, register, setErrorMessage, setSuccessMessage } = useAppContext();

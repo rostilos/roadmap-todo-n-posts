@@ -1,10 +1,11 @@
 import { isEmpty } from "lodash";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useNotesContext from "../../hook/useNotesContext";
-import CreateNote from "./CreateNote";
-import NotesList from "./NotesList";
+import CreateNote from "../../components/Notes/Form/CreateNote";
+import NotesList from "../../components/Notes/NotesList";
 
 const Notes = function () {
+  const [showNewNoteForm, setShowNewNoteForm] = useState(false);
   const { createNote, fetchNotes, userNotes } = useNotesContext();
 
   useEffect(() => {
@@ -38,13 +39,22 @@ const Notes = function () {
 
   return (
     <div className="notes-page">
-      <form onSubmit={submitCreateNoteForm}>
-        Notes
-        {/* <input className="_input" name="birth_date" type="date" id="" /> */}
-        <button type="submit">POST TEST</button>
-      </form>
-      {!isEmpty(userNotes) && <NotesList userNotes={userNotes} />}
-      <CreateNote submitCreateNoteForm={submitCreateNoteForm} />
+      <div className="notes-page__content _section">
+        <form onSubmit={submitCreateNoteForm}>
+          Notes
+          {/* <input className="_input" name="birth_date" type="date" id="" /> */}
+          <button type="submit">POST TEST</button>
+        </form>
+        {!isEmpty(userNotes) && <NotesList userNotes={userNotes} />}
+        <div className="notes-page__button-new">
+          <button class="_button" type="button" onClick={() => setShowNewNoteForm(!showNewNoteForm)}>
+            Add new
+          </button>
+        </div>
+        {showNewNoteForm && (
+          <CreateNote setShowNewNoteForm={setShowNewNoteForm} submitCreateNoteForm={submitCreateNoteForm} />
+        )}
+      </div>
     </div>
   );
 };
