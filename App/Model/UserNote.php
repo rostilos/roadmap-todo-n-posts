@@ -16,7 +16,7 @@ class UserNote extends Model
      * @access  public
      */
 
-    public function getUserNotes($userId)
+    public function getAll($userId)
     {
         $rows = $this->DB()
                         ->query('SELECT DISTINCT * FROM `user_notes` WHERE `user_id`= ' . "$userId")
@@ -40,11 +40,11 @@ class UserNote extends Model
     /**
      * Method create new user note.
      *
-     * @return array
+     * @return int
      * @access  public
      */
 
-    public function createNote($userId, $noteData)
+    public function create($noteData)
     {
         $row = $this->insert($noteData);
         return $row;
@@ -53,11 +53,40 @@ class UserNote extends Model
     /**
      * Method edit existed user note.
      *
+     * @return void
+     * @access  public
+     */
+    public function delete($noteId)
+    {
+        $rows = $this->DB()
+                        ->query('DELETE FROM `user_notes` WHERE `id`= ' . "$noteId")
+                        ->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Method edit existed user note.
+     *
      * @return array
      * @access  public
      */
-    public function updateUserNote($noteId, $userId)
+    public function update($noteData, $userId)
     {
-        
+        [
+            'id' => $id,
+            'title' => $title,
+            'content' => $content,
+            'priority' => $priority
+        ] = $noteData;
+
+        $query = 'UPDATE `user_notes` SET '
+                . '`title`=' . "'$title',"
+                . '`content`=' . "'$content',"
+                . '`priority`=' . "$priority "
+                . 'WHERE `user_id`=' . "$userId "
+                . 'AND `id`=' . "$id";
+        $rows = $this->DB()
+                        ->query($query)
+                        ->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->DB()->lastInsertId();
     }
 }

@@ -76,7 +76,6 @@ class Router {
      * @since   Method available since Release 1.0.0
      */
     private function checkRoute(string $url, string $method): ?iterable {
-        $test = $this->routes;
         foreach ($this->routes[$method] as $route_path => $route) {
 
             if (strpos($url, $route_path) === 0) {
@@ -165,7 +164,6 @@ class Router {
         $url = $_SERVER['REQUEST_URI'];
 
         // Get the method.
-        $test = $_SERVER;
         $method = $_SERVER['REQUEST_METHOD'];
 
         // Get default url if there is no route.

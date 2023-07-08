@@ -31,7 +31,7 @@ class Notes extends Controller
         if (!$userId) {
             return false;
         }
-        $userNotes = $this->noteModel->getUserNotes($userId);
+        $userNotes = $this->noteModel->getAll($userId);
         $this->return_json($userNotes);
     }
 
@@ -49,7 +49,42 @@ class Notes extends Controller
             'priority' => $postData['priority'],
             'created_at' => date('Y-m-d'),
         ];
-        $noteId = $this->noteModel->createNote($userId,$noteData);
+        $noteId = $this->noteModel->create($noteData);
         $this->return_json($noteId);
     }
+
+    public function update_note()
+    {
+        $bearer_token = $this->jwt->get_bearer_token();
+        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+
+        if(!$is_jwt_valid){
+            return false;
+        }
+
+        $userId = $this->jwt->getPayload($bearer_token)->user->id;
+        $postData = $this->getPostData();
+        $noteData = [
+            'id' => $postData['id'],
+            'title' => $postData['title'],
+            'content' => $postData['content'],
+            'priority' => $postData['priority']
+        ];
+        $noteId = $this->noteModel->update($noteData, $userId);
+        $this->return_json($noteId);
+    }
+
+    public function delete_note()
+    {
+        $bearer_token = $this->jwt->get_bearer_token();
+        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+        if(!$is_jwt_valid){
+            return false;
+        }
+        $userId = $this->jwt->getPayload($bearer_token)->user->id;
+        $postData = $this->getPostData();
+        $this->noteModel->delete($postData['id'], $userId);
+    }
+
+
 }

@@ -1,7 +1,6 @@
 import React from "react";
 
 const SidebarItem = function ({ label, icon, path, handleClick,isActive }) {
-  console.log('item');
   return (
     <div className="nav-sidebar__item">
       <button type="button" onClick={() => handleClick(path)}>
