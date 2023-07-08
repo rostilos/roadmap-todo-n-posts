@@ -1,0 +1,75 @@
+.notes-list {
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+}
+.note {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  border: 1px solid $blue-semitransparent;
+  border-radius: $border-sm;
+  padding: 16px;
+  &__actions {
+    align-self: center;
+  }
+  &__body {
+    border-left: 4px solid rgba(17, 81, 115, 0.5);
+    padding-left: 8px;
+  }
+  &__title {
+    font-weight: 700;
+  }
+  &__edit {
+    margin-top: 8px;
+  }
+  &__create-date {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+  }
+}
+
+
+.create-note{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    &:before{
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.1);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        backdrop-filter: blur(3px);
+    }
+    &__body{
+        min-width: 600px;
+        position: relative;
+    }
+    &__close{
+        position: absolute;
+        right: 16px;
+        top: 16px;
+    }
+    &__priority{
+        margin-bottom: 16px;
+    }
+    &__form{
+        & > input, & > textarea{
+            width: 100%;
+        }
+    }
+}
