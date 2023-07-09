@@ -127,6 +127,7 @@ const Notes = function () {
             userNotes={activeTabId === 3 ? userNotes : filteredNotes}
           />
         )}
+        {isEmpty(userNotes) && <p style={{ marginBottom: "10px" }}>There are no notes yet.</p>}
 
         {showNewNoteForm && (
           <CreateNote

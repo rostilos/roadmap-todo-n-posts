@@ -12,6 +12,11 @@ export async function fetchNotesAction(dispatch) {
         type: UPDATE_NOTES_LIST,
         payload: response,
       });
+    } else {
+      dispatch({
+        type: UPDATE_NOTES_LIST,
+        payload: {},
+      });
     }
   } catch (error) {
     console.error(error);
