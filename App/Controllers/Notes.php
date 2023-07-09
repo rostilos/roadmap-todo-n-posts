@@ -49,6 +49,7 @@ class Notes extends Controller
             'priority' => $postData['priority'],
             'created_at' => date('Y-m-d'),
         ];
+        // TODO: refactoring
         if($containsEmpty = in_array("", $noteData)){
             return false;
         }
@@ -73,6 +74,7 @@ class Notes extends Controller
             'content' => $postData['content'],
             'priority' => $postData['priority']
         ];
+        // TODO: refactoring
         if($containsEmpty = in_array("", $noteData)){
             return false;
         }
