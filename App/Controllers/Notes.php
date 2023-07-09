@@ -49,6 +49,9 @@ class Notes extends Controller
             'priority' => $postData['priority'],
             'created_at' => date('Y-m-d'),
         ];
+        if($containsEmpty = in_array("", $noteData)){
+            return false;
+        }
         $noteId = $this->noteModel->create($noteData);
         $this->return_json($noteId);
     }
@@ -70,6 +73,9 @@ class Notes extends Controller
             'content' => $postData['content'],
             'priority' => $postData['priority']
         ];
+        if($containsEmpty = in_array("", $noteData)){
+            return false;
+        }
         $noteId = $this->noteModel->update($noteData, $userId);
         $this->return_json($noteId);
     }

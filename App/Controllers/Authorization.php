@@ -49,6 +49,9 @@ class Authorization extends Controller
             'email' => $postData['email'],
             'birth_date' => date('Y-m-d'),
         ];
+        if($containsEmpty = in_array("", $user)){
+            return false;
+        }
         if ($user_id = $this->user->create($user)) {
             $user['id'] = $user_id;
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
