@@ -49,6 +49,7 @@ class Authorization extends Controller
             'email' => $postData['email'],
             'birth_date' => date('Y-m-d'),
         ];
+        // TODO: refactoring
         if($containsEmpty = in_array("", $user)){
             return false;
         }
