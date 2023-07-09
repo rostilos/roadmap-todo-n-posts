@@ -5,6 +5,11 @@ body{
   &__content{
     
   }
+  @media screen and (max-width: $screen-xl){
+    &__updates{
+      display: none;
+    }
+  }
   &__sidebar{
     padding: 16px;
   }
@@ -13,6 +18,9 @@ body{
   display: grid;
   grid-template-columns: 198px 1fr 340px;
   column-gap: 16px;
+  @media screen and (max-width: $screen-xl){
+    grid-template-columns: 180px 1fr;
+  }
 }
 .grid-2-cols{
   display: grid;

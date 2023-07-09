@@ -10,9 +10,9 @@ import Message from "./components/Common/Message/Message";
 function App() {
   return (
     <div className="page">
+      <Message />
       <Header />{" "}
       <div className="page__container _container">
-        <Message />
         <main className="page__content grid-3-cols">
           <BrowserRouter>
             <Sidebar />

@@ -1,12 +1,12 @@
 import React from "react";
 
 const EditNote = function ({ editNoteData, setEditNoteData, submitEditNoteForm }) {
-  console.log(editNoteData);
   return (
-    <div className="create-note ">
-      <div className="create-note__body _section">
+    <div className="_form-popup ">
+      <div className="_form-popup__overlay" onClick={() => setEditNoteData(null)}></div>
+      <div className={`_form-popup__body _section ${editNoteData ? "active" : ""}`}>
         <h1 className="page__title">Edit note</h1>
-        <form onSubmit={submitEditNoteForm} className="create-note__form">
+        <form onSubmit={submitEditNoteForm} className="_form-popup__form">
           <input type="hidden" name="id" defaultValue={editNoteData?.id} />
           <p>Title</p>
           <input defaultValue={editNoteData?.title} className="_input" name="title" type="text" />
@@ -20,7 +20,7 @@ const EditNote = function ({ editNoteData, setEditNoteData, submitEditNoteForm }
           />
 
           <p>Priority</p>
-          <div className="create-note__priority">
+          <div className="_form-popup__priority">
             <div>
               <input
                 defaultChecked={editNoteData?.priority === 0}
@@ -59,7 +59,7 @@ const EditNote = function ({ editNoteData, setEditNoteData, submitEditNoteForm }
             Submit
           </button>
         </form>
-        <button type="button" className="create-note__close" onClick={() => setEditNoteData(null)}>
+        <button type="button" className="_form-popup__close" onClick={() => setEditNoteData(null)}>
           x
         </button>
       </div>

@@ -1,19 +1,20 @@
 import React from "react";
 
-const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm }) {
+const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm, showNewNoteForm }) {
   return (
-    <div className="create-note ">
-      <div className="create-note__body _section">
+    <div className="_form-popup">
+      <div className="_form-popup__overlay" onClick={() => setShowNewNoteForm(false)}></div>
+      <div className={`_form-popup__body _section ${showNewNoteForm ? "active" : ""}`}>
         <h1 className="page__title">Add new note</h1>
-        <form onSubmit={submitCreateNoteForm} className="create-note__form">
+        <form onSubmit={submitCreateNoteForm} className="_form-popup__form">
           <p>Title</p>
           <input className="_input" name="title" type="text" />
 
           <p>Content</p>
-          <textarea className="_textarea" name="content"  style={{ resize: "none" }} />
+          <textarea className="_textarea" name="content" style={{ resize: "none" }} />
 
           <p>Priority</p>
-          <div className="create-note__priority">
+          <div className="_form-popup__priority">
             <div>
               <input type="radio" className="_radio" id="low" name="priority" value="0" />
               <label for="low">Low</label>
@@ -31,7 +32,7 @@ const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm }) {
             Submit
           </button>
         </form>
-        <button type="button" className="create-note__close" onClick={() => setShowNewNoteForm(false)}>
+        <button type="button" className="_form-popup__close" onClick={() => setShowNewNoteForm(false)}>
           x
         </button>
       </div>

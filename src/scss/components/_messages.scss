@@ -1,8 +1,10 @@
 .message{
     display: block;
-    position: sticky;
+    position: fixed;
     padding: 6px;
     top: 0;
+    width: 100%;
+    z-index: 10;
     &__content{
         position: relative;
         padding: 8px 20px;

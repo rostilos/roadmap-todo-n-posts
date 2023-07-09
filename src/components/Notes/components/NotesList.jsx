@@ -13,4 +13,4 @@ const NotesList = function ({ userNotes, setEditNoteData, deleteNoteRequest }) {
   );
 };
 
-export default React.memo(NotesList);
+export default NotesList;

@@ -19,19 +19,23 @@ const Sidebar = function () {
   }
   const isActive = false;
   const sidebarElements = filteredSidebarItems.map(({ label, icon, path }) => {
-    return <SidebarItem handleClick={handleClick} key={label} label={label} path={path} icon={icon} isActive={isActive} />;
+    return (
+      <SidebarItem handleClick={handleClick} key={label} label={label} path={path} icon={icon} isActive={isActive} />
+    );
   });
   return (
-    <aside className="page__sidebar sidebar _section">
-      {sidebarElements}
-      {isLoggedIn && (
-        <div className="nav-sidebar__item">
-          <button type="button" onClick={clearCustomerData}>
-            <img alt="unset" className="nav-sidebar__icon" />
-            <span className="nav-sidebar__label">Log out</span>
-          </button>
-        </div>
-      )}
+    <aside className="page__sidebar sidebar" style={{ padding: 0 }}>
+      <div className="_section">
+        {sidebarElements}
+        {isLoggedIn && (
+          <div className="nav-sidebar__item">
+            <button type="button" onClick={clearCustomerData}>
+              <img alt="unset" className="nav-sidebar__icon" />
+              <span className="nav-sidebar__label">Log out</span>
+            </button>
+          </div>
+        )}
+      </div>
     </aside>
   );
 };

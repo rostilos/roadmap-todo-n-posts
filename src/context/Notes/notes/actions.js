@@ -21,9 +21,9 @@ export async function fetchNotesAction(dispatch) {
 export async function createNoteAction(dispatch, noteData) {
   try {
     const response = await createNoteRequest(dispatch, noteData);
-    const { errors, status } = response;
-    if (!errors && status) {
-      return status;
+    if (response) {
+      fetchNotesAction(dispatch);
+      return response;
     }
   } catch (error) {
     console.error(error);
@@ -33,9 +33,9 @@ export async function createNoteAction(dispatch, noteData) {
 export async function editNoteAction(dispatch, noteData) {
   try {
     const response = await editNoteRequest(dispatch, noteData);
-    const { errors, status } = response;
-    if (!errors && status) {
-      return status;
+    if (response) {
+      fetchNotesAction(dispatch);
+      return response;
     }
   } catch (error) {
     console.error(error);
@@ -44,11 +44,8 @@ export async function editNoteAction(dispatch, noteData) {
 
 export async function deleteNoteAction(dispatch, noteData) {
   try {
-    const response = await deleteNoteRequest(dispatch, noteData);
-    const { errors, status } = response;
-    if (!errors && status) {
-      return status;
-    }
+    await deleteNoteRequest(dispatch, noteData);
+    fetchNotesAction(dispatch);
   } catch (error) {
     console.error(error);
   }
