@@ -10,16 +10,9 @@ const Login = function () {
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
 
-  const submitLoginHandler = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const userData = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-    };
-    // rostilosfl@gmail.com; 123123qwe;
+  const submitLoginHandler = async (values) => {
     try {
-      const loginResponse = await ajaxLogin(userData);
+      const loginResponse = await ajaxLogin(values);
       const loggedIn = !!loginResponse?.status;
       if (loggedIn) {
         setSuccessMessage("You are successfully logged in!");
@@ -33,18 +26,9 @@ const Login = function () {
       console.error(error);
     }
   };
-  const submitRegisterHandler = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const userData = {
-      firstname: formData.get("firstname"),
-      lastname: formData.get("lastname"),
-      password: formData.get("password"),
-      birth_date: formData.get("birth_date"),
-      email: formData.get("email"),
-    };
+  const submitRegisterHandler = async (values) => {
     try {
-      const userToken = await register(userData);
+      const userToken = await register(values);
       if (userToken) {
         setSuccessMessage("You have successfully registered your account");
         navigate("/");
