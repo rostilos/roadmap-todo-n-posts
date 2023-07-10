@@ -1,19 +1,9 @@
-import _get from "lodash.get";
-import { ajaxLoginRequest, registerRequest } from "../../../api";
+import { ajaxLoginRequest, registerRequest, updateUserRequest, updateUserPasswordRequest } from "../../../api";
 import jwt from "jwt-decode";
 import initialState from "../initialState";
 
-// import {
-//   setErrorMessageAction,
-//   setSuccessMessageAction,
-// } from '../page/actions';
-import {
-  //   SET_CUSTOMER_INFO,
-  //   UPDATE_CUSTOMER_ADDRESS,
-  //   SET_CUSTOMER_ADDRESS_INFO,
-  UPDATE_USER_DATA,
-  UPDATE_USER_LOGGEDIN_STATUS,
-} from "./types";
+import { UPDATE_USER_DATA, UPDATE_USER_LOGGEDIN_STATUS } from "./types";
+
 import LocalStorage from "../../../utils/localStorage";
 import { isEmpty } from "lodash";
 
@@ -60,6 +50,33 @@ export async function registerAction(dispatch, userData) {
     console.error(error);
   }
   return false;
+}
+
+export async function updateUserAction(dispatch, userData) {
+  try {
+    const response = await updateUserRequest(dispatch, userData);
+    const { errors, status } = response;
+    if (!errors && status) {
+      const signInToken = status;
+      LocalStorage.saveUserToken(signInToken);
+      setCustomerDataFromTokenAction(dispatch);
+      return signInToken;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return false;
+}
+
+export async function updateUserPasswordAction(dispatch, passwordData) {
+  try {
+    const response = await updateUserPasswordRequest(dispatch, passwordData);
+    const { status } = response;
+    return status;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
 
 export function setCustomerDataFromTokenAction(dispatch) {

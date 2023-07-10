@@ -47,7 +47,7 @@ class Authorization extends Controller
             'lastname' => $postData['lastname'],
             'password' => md5($postData['password']),
             'email' => $postData['email'],
-            'birth_date' => date('Y-m-d'),
+            'birth_date' => date('Y-m-d', strtotime($postData['birth_date'])),
         ];
         // TODO: refactoring
         if($containsEmpty = in_array("", $user)){

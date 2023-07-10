@@ -1,5 +1,8 @@
 import ajaxLogin from "./user/login";
 import register from "./user/register";
+import updateUser from "./user/update";
+import updateUserPassword from "./user/updatePassword";
+
 import fetchNotes from "./notes/fetch/";
 import createNote from "./notes/create";
 import editNote from "./notes/edit";
@@ -11,3 +14,5 @@ export const fetchNotesRequest = fetchNotes;
 export const createNoteRequest = createNote;
 export const editNoteRequest = editNote;
 export const deleteNoteRequest = deleteNote;
+export const updateUserRequest = updateUser;
+export const updateUserPasswordRequest = updateUserPassword;

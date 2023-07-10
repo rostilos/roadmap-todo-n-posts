@@ -4,6 +4,8 @@ import {
   registerAction,
   setCustomerDataFromTokenAction,
   clearCustomerDataAction,
+  updateUserAction,
+  updateUserPasswordAction,
 } from "./user/actions";
 import { setMessageAction, setPageLoaderAction, setErrorMessageAction, setSuccessMessageAction } from "./page/actions";
 const dispatchMapper = {
@@ -16,6 +18,8 @@ const dispatchMapper = {
   register: registerAction,
   setCustomerDataFromToken: setCustomerDataFromTokenAction,
   clearCustomerData: clearCustomerDataAction,
+  updateUser: updateUserAction,
+  updateUserPassword: updateUserPasswordAction,
 };
 
 export default function appDispatcher(dispatch) {

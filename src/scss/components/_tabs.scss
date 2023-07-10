@@ -1,0 +1,38 @@
+._tabs {
+    display: flex;
+    &__item {
+      border: 1px solid $blue-semitransparent;
+      padding: 4px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:after {
+        content: "";
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-left: 8px;
+      }
+      &--important:after {
+        background-color: $common-red;
+      }
+      &--medium:after {
+        background-color: $common-yellow;
+      }
+      &--low:after {
+        background-color: $accept-green;
+      }
+      &:first-child {
+        border-radius: $border-sm 0 0 0;
+      }
+      &:last-child {
+        border-radius: 0 $border-sm 0 0;
+      }
+      &--active {
+        border-color: $blue-transparent;
+        background-color: $blue-transparent;
+      }
+    }
+  }
+  
