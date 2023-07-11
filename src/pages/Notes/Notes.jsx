@@ -108,6 +108,8 @@ const Notes = function () {
   return (
     <div className="notes-page">
       <div className="notes-page__content _section">
+        <h1 className="page__title">Sorting by priority:</h1>
+
         <NoteTabs changeHandler={handleFilterChange} activeTab={activeTabId} />
         <div className="notes-page__header">
           <p className="notes-page__note-count">

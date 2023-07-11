@@ -3,7 +3,7 @@ import React from "react";
 const UserEditTabs = function ({ handleTabChange, activeTab, children }) {
   return (
     <div className="_section">
-      <div className="user-page__tabs _tabs ">
+      <div className="user-account__tabs _tabs ">
         <button
           type="button"
           onClick={() => handleTabChange(0)}

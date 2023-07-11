@@ -8,21 +8,21 @@ const NoteTabs = function ({ changeHandler, activeTab }) {
         onClick={() => changeHandler(2)}
         className={`_tabs__item _tabs__item--important ${activeTab === 2 ? "_tabs__item--active" : ""}`}
       >
-        Important
+        High
       </button>
       <button
         type="button"
         onClick={() => changeHandler(1)}
         className={`_tabs__item _tabs__item--medium ${activeTab === 1 ? "_tabs__item--active" : ""}`}
       >
-        Medium priority
+        Medium
       </button>
       <button
         type="button"
         onClick={() => changeHandler(0)}
         className={`_tabs__item _tabs__item--low ${activeTab === 0 ? "_tabs__item--active" : ""}`}
       >
-        Low priority
+        Low
       </button>
       <button
         type="button"

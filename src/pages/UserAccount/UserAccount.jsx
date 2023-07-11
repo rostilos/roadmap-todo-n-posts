@@ -3,30 +3,45 @@ import EditUserForm from "../../components/UserAccount/components/Form/EditUserF
 import EditUserPasswordForm from "../../components/UserAccount/components/Form/EditUserPasswordForm";
 import UserEditTabs from "../../components/UserAccount/components/UserEditTabs";
 import useAppContext from "../../hook/useAppContext";
+import userImagePlaceHolder from "../../assets/images/user/user-image-placeholder.png";
+import edit from "../../assets/images/common/edit.svg";
 
 const UserAccount = function () {
   const { userData } = useAppContext();
+  const [showEditTabs, setShowEditTabs] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
   const handleTabChange = (id) => {
     setActiveTab(id);
   };
-  console.log(activeTab);
+
+  const { firstname, lastname, birth_date, email } = userData;
+  const fullname = `${firstname} ${lastname}`;
 
   return (
     <div>
       <div className="user-account _section">
         <h1 className="page__title">Account Information</h1>
-
-        <p>{userData?.firstname}</p>
-        <p>{userData?.lastname}</p>
-        <p>{userData?.birth_date}</p>
-        <p>{userData?.email}</p>
+        <div className="user-account__body">
+          <div className="user-account__image">
+            <img src={userImagePlaceHolder} alt="" />
+          </div>
+          <div className="user-account__info">
+            <p className="user-account__fullname">{fullname}</p>
+            <p>{birth_date}</p>
+            <p>{email}</p>
+            <button type="button" onClick={() => setShowEditTabs(!showEditTabs)}>
+              <img src={edit} alt="Edit User Data" className="user-account__edit-button" />
+            </button>
+          </div>
+        </div>
       </div>
-      <UserEditTabs handleTabChange={handleTabChange} activeTab={activeTab}>
-        {activeTab === 0 && <EditUserForm userData={userData} />}
-        {activeTab === 1 && <EditUserPasswordForm />}
-      </UserEditTabs>
+      {showEditTabs && (
+        <UserEditTabs handleTabChange={handleTabChange} activeTab={activeTab}>
+          {activeTab === 0 && <EditUserForm userData={userData} />}
+          {activeTab === 1 && <EditUserPasswordForm />}
+        </UserEditTabs>
+      )}
     </div>
   );
 };

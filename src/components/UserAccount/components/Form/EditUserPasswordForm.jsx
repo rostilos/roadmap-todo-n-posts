@@ -46,7 +46,7 @@ const EditUserPasswordForm = function () {
             Current Password
           </label>
           <Field
-            className={`_input ${errors.current_password && touched.current_password ? "_input__error" : ""}`}
+            className={`_input _input--small-height ${errors.current_password && touched.current_password ? "_input__error" : ""}`}
             name="current_password"
           />
           <ErrorMessage error={errors.current_password} touched={touched.current_password} />
@@ -54,7 +54,7 @@ const EditUserPasswordForm = function () {
             New Password
           </label>
           <Field
-            className={`_input ${errors.new_password && touched.new_password ? "_input__error" : ""}`}
+            className={`_input _input--small-height ${errors.new_password && touched.new_password ? "_input__error" : ""}`}
             name="new_password"
           />
           <ErrorMessage error={errors.new_password} touched={touched.new_password} />

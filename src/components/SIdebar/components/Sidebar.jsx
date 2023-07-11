@@ -1,12 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useAppContext from "../../../hook/useAppContext";
 import sidebarItems from "../utils/sidebarItems";
 import SidebarItem from "./SidebarItem";
+import logout from "../../../assets/images/sidebar/logout.svg";
 
 const Sidebar = function () {
   const navigate = useNavigate();
   const { isLoggedIn, clearCustomerData } = useAppContext();
+  const location = useLocation();
 
   let filteredSidebarItems;
   const handleClick = (path) => {
@@ -17,10 +19,16 @@ const Sidebar = function () {
   } else {
     filteredSidebarItems = sidebarItems;
   }
-  const isActive = false;
   const sidebarElements = filteredSidebarItems.map(({ label, icon, path }) => {
     return (
-      <SidebarItem handleClick={handleClick} key={label} label={label} path={path} icon={icon} isActive={isActive} />
+      <SidebarItem
+        handleClick={handleClick}
+        isActive={location.pathname === path}
+        key={label}
+        label={label}
+        path={path}
+        icon={icon}
+      />
     );
   });
   return (
@@ -30,7 +38,7 @@ const Sidebar = function () {
         {isLoggedIn && (
           <div className="nav-sidebar__item">
             <button type="button" onClick={clearCustomerData}>
-              <img alt="unset" className="nav-sidebar__icon" />
+              <img alt="unset" src={logout} className="nav-sidebar__icon" />
               <span className="nav-sidebar__label">Log out</span>
             </button>
           </div>

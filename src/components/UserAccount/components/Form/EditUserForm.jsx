@@ -54,19 +54,19 @@ const EditUserForm = function ({ userData }) {
             Firstname
           </label>
           <Field
-            className={`_input ${errors.firstname && touched.firstname ? "_input__error" : ""}`}
+            className={`_input _input--small-height ${errors.firstname && touched.firstname ? "_input__error" : ""}`}
             name="firstname"
           />
           <ErrorMessage error={errors.firstname} touched={touched.firstname} />
           <label className="_input__label" htmlFor="lastname">
             Lastname
           </label>
-          <Field className={`_input ${errors.lastname && touched.lastname ? "_input__error" : ""}`} name="lastname" />
+          <Field className={`_input _input--small-height ${errors.lastname && touched.lastname ? "_input__error" : ""}`} name="lastname" />
           <ErrorMessage error={errors.lastname} touched={touched.lastname} />
           <label className="_input__label" htmlFor="birth_date">
             Date of Birth
           </label>
-          <Field type="date" className="_input" name="birth_date" />
+          <Field type="date" className="_input _input--small-height" name="birth_date" />
           <ErrorMessage error={errors.birth_date} touched={touched.birth_date} />
 
           <button className="_button" type="submit">
