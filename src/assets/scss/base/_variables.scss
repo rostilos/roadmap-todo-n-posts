@@ -9,9 +9,14 @@ $blue-semilight: #115173;
 $blue-semitransparent: rgba(17, 81, 115, 0.2);
 $blue-transparent: rgba(17, 81, 115, 0.1);
 
+$grey-500: #616E7C;
+$grey-600: rgba(82, 96, 109, 1);
+$grey-700: #3E4C59;
+
 $yellow: #ffd700;
 
 $page-bg: #eeeeee;
+$bg-transparent: rgba(245, 247, 250, 0.50);
 $section-bg: #ffffff;
 
 $input-bg: rgba(108, 108, 108, 0.04);
@@ -36,4 +41,5 @@ $animation: all .4s ease-in-out;
 
 // Shadows
 $shadow-md: 0px 2px 4px rgba(0, 0, 0, 0.09);
+$shadow-input: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 $shadow-inset: inset 2px 4px rgba(0, 0, 0, 0.09);

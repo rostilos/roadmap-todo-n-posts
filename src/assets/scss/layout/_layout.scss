@@ -1,0 +1,53 @@
+body {
+  background-color: $page-bg;
+}
+.page {
+  &__content {
+  }
+  &__title {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  @media screen and (max-width: $screen-xl) {
+    &__updates {
+      display: none;
+    }
+  }
+  &__sidebar {
+    padding: 16px;
+  }
+}
+.grid-3-cols {
+  display: grid;
+  grid-template-columns: 198px 1fr 340px;
+  column-gap: 16px;
+  @media screen and (max-width: $screen-xl) {
+    grid-template-columns: 180px 1fr;
+  }
+  @media screen and (max-width: $screen-lg) {
+    grid-template-columns: auto 1fr;
+    column-gap: 8px;
+  }
+}
+.grid-2-cols {
+  display: grid;
+  grid-template-columns: 198px 1fr;
+}
+
+/* Стили для ограничивающего контейнера на странице */
+._container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 130px;
+  @media screen and (max-width: $screen-2xl) {
+    padding: 0 60px;
+  }
+  @media screen and (max-width: $screen-xl) {
+    padding: 0 24px;
+  }
+  @media screen and (max-width: $screen-md) {
+    padding: 0 12px;
+  }
+}

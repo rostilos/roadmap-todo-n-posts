@@ -1,0 +1,27 @@
+._section {
+  margin-top: 25px;
+  border-radius: $border-md;
+  background-color: $section-bg;
+  padding: 16px;
+  box-shadow: $shadow-md;
+  transition: $animation;
+  opacity: 0;
+  @media screen and (max-width: $screen-xl) {
+    padding: 12px;
+  }
+  @media screen and (max-width: $screen-md) {
+    padding: 10px;
+  }
+
+  animation: appear 0.7s normal forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

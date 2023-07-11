@@ -4,6 +4,12 @@
   background: $blue-transparent;
   display: flex;
   align-items: center;
+  box-shadow: $shadow-input;
+  border-radius: $border-md;
+  padding: 10px;
+  min-width: 200px;
+  height: 44px;
+  margin-bottom: 16px;
   &__error{
     border: 1px solid $common-red;
   }
@@ -13,22 +19,22 @@
     color: $common-red;
   }
   &__label{
+    font-weight: 500;
+    display: inline-block;
     margin-bottom: 6px;
   }
   &:focus {
     border: 1px solid $blue-semilight;
   }
-  box-shadow: $shadow-md;
-  border-radius: $border-md;
-  padding: 10px;
-  min-width: 200px;
-  height: 44px;
-  margin-bottom: 16px;
+  &--small-height{
+    height: 30px;
+  }
+  
 }
 ._textarea {
   background: $blue-transparent;
   border: none;
-  box-shadow: $shadow-md;
+  box-shadow: $shadow-input;
   border-radius: $border-md;
   padding: 10px;
   min-height: 150px;

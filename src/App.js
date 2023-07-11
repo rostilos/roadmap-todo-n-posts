@@ -3,7 +3,7 @@ import Router from "./pages/Router/Router";
 import Header from "./components/Header/components/Header";
 import Sidebar from "./components/SIdebar/components/Sidebar";
 import LastUpdates from "./components/LastUpdates/LastUpdates";
-import "./scss/main.scss";
+import "./assets/scss/main.scss";
 import Message from "./components/Common/Message/Message";
 // import Footer from "./components/Footer/components/Footer";
 
@@ -21,7 +21,6 @@ function App() {
           <LastUpdates />
         </main>{" "}
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

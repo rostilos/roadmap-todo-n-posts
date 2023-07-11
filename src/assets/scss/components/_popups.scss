@@ -21,10 +21,10 @@
       cursor: pointer;
     }
     &__body {
-      min-width: 600px;
+      min-width: 90%;
       position: relative;
-      &.active{
-        animation: 0.3s alternate scalein;
+      @media screen and (min-width: $screen-md){
+        min-width: 600px;
       }
     }
     &__close {
@@ -43,12 +43,3 @@
     }
 }
 
-@keyframes scalein {
-    from {
-      transform: scale(0.5);
-    }
-  
-    to {
-      transform: scale(1);
-    }
-  }
