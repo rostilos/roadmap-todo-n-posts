@@ -63,6 +63,16 @@ abstract class Model {
     }
 
     /**
+     * Abstract method for getting all records from database.
+     *
+     *
+     * @return array
+     * @access  public
+     * @since   Method available since Release 1.0.0
+     */
+    // abstract function getAll(): iterable;
+
+    /**
      * The method return a PDO database connection.
      *
      * @return object

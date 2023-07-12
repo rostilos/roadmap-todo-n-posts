@@ -7,7 +7,7 @@ use App\Model\User as UserModel;
 use Core\Jwt;
 use Core\Validator;
 
-class User extends Controller
+class UserController extends Controller
 {
     /**
      * @var Jwt
@@ -84,5 +84,14 @@ class User extends Controller
         }
         return false;
         
+    }
+
+    public function getAllUsersData()
+    {
+        $bearer_token = $this->jwt->get_bearer_token();
+        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+ 
+        $users = $this->userModel->getAll();
+        $this->return_json($users);
     }
 }

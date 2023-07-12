@@ -6,7 +6,7 @@ use Core\Controller;
 use App\Model\User;
 use Core\Jwt;
 
-class Authorization extends Controller
+class AuthorizationController extends Controller
 {
     /**
      * @var Jwt

@@ -3,7 +3,7 @@ namespace App\Model;
 
 use Core\Model;
 
-class UserNote extends Model
+class Note extends Model
 {
     public function __construct() {
         parent::__construct("user_notes");
@@ -16,7 +16,7 @@ class UserNote extends Model
      * @access  public
      */
 
-    public function getAll($userId)
+    public function getUserNotes($userId)
     {
         $rows = $this->DB()
                         ->query('SELECT DISTINCT * FROM `user_notes` WHERE `user_id`= ' . "$userId")

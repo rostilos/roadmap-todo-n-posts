@@ -3,10 +3,10 @@ namespace App\Controllers;
 
 use Core\Request;
 use Core\Controller;
-use App\Model\UserNote;
+use App\Model\Note;
 use Core\Jwt;
 
-class Notes extends Controller
+class NotesController extends Controller
 {
     /**
      * @var Jwt
@@ -14,13 +14,13 @@ class Notes extends Controller
     private $jwt;
 
     /**
-     * @var UserNote
+     * @var Note
      */
     private $userNote;
 
     public function __construct() {
         $this->jwt = new Jwt();
-        $this->noteModel = new UserNote();
+        $this->noteModel = new Note();
     }
 
     public function user_notes()
@@ -31,11 +31,11 @@ class Notes extends Controller
         if (!$userId) {
             return false;
         }
-        $userNotes = $this->noteModel->getAll($userId);
+        $userNotes = $this->noteModel->getUserNotes($userId);
         $this->return_json($userNotes);
     }
 
-    public function create_note()
+    public function create()
     {
         $bearer_token = $this->jwt->get_bearer_token();
         $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
@@ -57,7 +57,7 @@ class Notes extends Controller
         $this->return_json($noteId);
     }
 
-    public function update_note()
+    public function update()
     {
         $bearer_token = $this->jwt->get_bearer_token();
         $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
@@ -82,7 +82,7 @@ class Notes extends Controller
         $this->return_json($noteId);
     }
 
-    public function delete_note()
+    public function delete()
     {
         $bearer_token = $this->jwt->get_bearer_token();
         $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
@@ -93,6 +93,4 @@ class Notes extends Controller
         $postData = $this->getPostData();
         $this->noteModel->delete($postData['id'], $userId);
     }
-
-
 }
