@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { isEmpty } from "lodash";
+import React, { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import UsersList from "../../components/Community/UsersList";
-// import useAppContext from "../../hook/useAppContext";
 import useCommunityContext from "../../hook/useCommunityContext";
 import { paramsToObject } from "../../api/utility";
 import Toolbar from "../../components/Common/Pagination/Toolbar";
@@ -22,9 +20,6 @@ const Community = function () {
     fetchUsersList(query);
   }, []);
 
-  if (!users) {
-    return;
-  }
   const { pagination, data } = users;
 
   return (

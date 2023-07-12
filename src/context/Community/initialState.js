@@ -1,11 +1,13 @@
 const initialState = {
-  data: {},
-  pagination: {
-    total: null,
-    page: null,
-    limit: null,
-    nextPage: null,
-    prevPage: null,
+  users: {
+    data: {},
+    pagination: {
+      total: null,
+      page: null,
+      limit: null,
+      nextPage: null,
+      prevPage: null,
+    },
   },
 };
 
