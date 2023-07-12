@@ -58,9 +58,9 @@ class Note extends Model
      */
     public function delete($noteId)
     {
-        $rows = $this->DB()
-                        ->query('DELETE FROM `user_notes` WHERE `id`= ' . "$noteId")
-                        ->fetchAll(\PDO::FETCH_ASSOC);
+        $this->DB()
+                ->query('DELETE FROM `user_notes` WHERE `id`= ' . "$noteId")
+                ->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

@@ -51,7 +51,6 @@ const Notes = function () {
         setShowNewNoteForm(false);
         setSuccessMessage("You have successfully added a new note");
         // navigate("/");
-        // console.log(status);
       } else {
         setErrorMessage("Something went wrong");
       }
@@ -73,9 +72,9 @@ const Notes = function () {
     try {
       const status = await editNote(noteData);
       if (status) {
+        setEditNoteData(null);
         // setSuccessMessage("You have successfully registered your account");
         // navigate("/");
-        // console.log(status);
       } else {
         // setErrorMessage("Something went wrong. Check data");
       }
@@ -91,7 +90,6 @@ const Notes = function () {
       if (status) {
         // setSuccessMessage("You have successfully registered your account");
         // navigate("/");
-        // console.log(status);
       } else {
         // setErrorMessage("Something went wrong. Check data");
       }
@@ -116,7 +114,7 @@ const Notes = function () {
             {notePriorityIds[activeTabId]} Notes ({Object.keys(filteredNotes).length})
           </p>
           <div className="notes-page__button-new">
-            <button class="_button" type="button" onClick={() => setShowNewNoteForm(!showNewNoteForm)}>
+            <button className="_button" type="button" onClick={() => setShowNewNoteForm(!showNewNoteForm)}>
               Add new
             </button>
           </div>
