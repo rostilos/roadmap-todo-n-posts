@@ -1,6 +1,6 @@
-export function fetchUsersReducer(state, users) {
+export function fetchUsersReducer(state, usersCollection) {
   return {
     ...state,
-    users: users,
+    users: usersCollection,
   };
 }

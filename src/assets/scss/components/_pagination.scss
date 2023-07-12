@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.pagination-item {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-sm;
+  background-color: #fff;
+  border: 1px solid $grey-500;
+  color: $grey-500;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: $animation;
+
+  margin-right: 8px;
+
+  &--current,
+  &:hover {
+    background-color: $blue-transparent;
+    color: $blue-dark;
+  }
+}

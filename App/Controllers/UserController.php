@@ -54,9 +54,9 @@ class UserController extends Controller
         if($this->validator->isContainsEmptyValues($userData)){
             return false;
         }
-        if ($userData = $this->userModel->update($userData, $userId)) {
+        if ($updatedUserData = $this->userModel->update($userData, $userId)) {
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
-            $payload = ['user' => $userData];
+            $payload = ['user' => $updatedUserData];
             $jwtToken = $this->jwt->generate_jwt($headers, $payload);
             $this->return_json(['status' => $jwtToken]);
         }
@@ -90,8 +90,21 @@ class UserController extends Controller
     {
         $bearer_token = $this->jwt->get_bearer_token();
         $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
- 
-        $users = $this->userModel->getAll();
+        if(!$is_jwt_valid){
+            return false;
+        }
+        $postData = $this->getPostData();
+        $page = 1;
+        $limit = 5;
+        if(isset($postData['page'])){
+            $page = $postData['page'];
+        }
+        if(isset($postData['limit'])){
+            $limit = $postData['limit'];
+        }
+        $offset = ($page-1) * $limit;
+        
+        $users = $this->userModel->getAll($page,$offset,$limit);
         $this->return_json($users);
     }
 }

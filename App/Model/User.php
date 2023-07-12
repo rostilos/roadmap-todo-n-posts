@@ -59,20 +59,10 @@ class User extends Model
             'lastname' => $lastname,
             'birth_date' => $birthDate,
         ] = $userData;
-        $changePasswordQueryPart = '';
-        $password = isset($userData['password']) ? $userData['password'] : null;
-        $currentPassword = isset($userData['current_password']) ? $userData['current_password'] : null;  
-
-        if($password && $currentPassword){
-
-        }      
-
-        $changePasswordQueryPart = '`password`=' . "'$password',";
 
         $query = 'UPDATE `users` SET '
                 . '`firstname`=' . "'$firstname',"
                 . '`lastname`=' . "'$lastname',"
-                . $changePasswordQueryPart
                 . '`birth_date`=' . "'$birthDate' "
                 . 'WHERE `id`=' . "$userId ";
 
@@ -110,18 +100,34 @@ class User extends Model
      * @access  public
      */
 
-    public function getAll()
+    public function getAll($page,$offset, $limit)
     {
-        $query = 'SELECT DISTINCT firstname,lastname,email,birth_date '
-        . 'FROM `users` ';
-        $rows = $this->DB()
-                        ->query($query)
-                        ->fetchAll(\PDO::FETCH_ASSOC);
+        $query =
+            'SELECT DISTINCT firstname,lastname,email,birth_date ' .
+            'FROM `users` ';
+        $totalRows = $this->DB()
+            ->query($query)
+            ->rowCount();
+        $totalPages = ceil($totalRows / $limit);
 
-        // Insert data from database
-        $users = [];
+        $query =
+            'SELECT DISTINCT firstname,lastname,email,birth_date ' .
+            'FROM `users` ' .
+            'LIMIT ' .
+            $offset .
+            ',' .
+            $limit;
+
+        $rows = $this->DB()
+            ->query($query)
+            ->fetchAll(\PDO::FETCH_ASSOC);
+
+        $users = [
+            'data' => [],
+            'pagination' => [],
+        ];
         foreach ($rows as $row) {
-            array_push($users, [
+            array_push($users['data'], [
                 // 'id' => $row['id'],
                 'firstname' => $row['firstname'],
                 'lastname' => $row['lastname'],
@@ -129,6 +135,11 @@ class User extends Model
                 'birth_date' => $row['birth_date'],
             ]);
         }
+        $users['pagination'] = [
+            'total' => $totalPages,
+            'page' => $page,
+            'limit' => $limit,
+        ];
 
         return $users;
     }
@@ -143,7 +154,7 @@ class User extends Model
     public function getUserByEmail($email)
     {
         $query =
-            'SELECT DISTINCT firstname,lastname,email,birth_date ' 
+            'SELECT DISTINCT id,firstname,lastname,email,birth_date ' 
             . 'FROM `users` '
             . 'WHERE ' . '`email`=' . "'$email' ";
         $row = $this->DB()
@@ -166,7 +177,7 @@ class User extends Model
     private function getUserById($id)
     {
         $query =
-            'SELECT DISTINCT firstname,lastname,email,birth_date '
+            'SELECT DISTINCT id,firstname,lastname,email,birth_date '
             . 'FROM `users` '
             . 'WHERE ' . '`id`=' . "'$id' ";
         $row = $this->DB()

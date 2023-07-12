@@ -3,11 +3,10 @@ import { fetchAllUsersRequest } from "../../../api";
 import { UPDATE_USERS_LIST } from "./types";
 import { isEmpty } from "lodash";
 
-export async function fetchUsersAction(dispatch) {
+export async function fetchUsersAction(dispatch, query) {
   try {
-    const response = await fetchAllUsersRequest(dispatch);
-    console.log(response);
-    if (!isEmpty(response)) {
+    const response = await fetchAllUsersRequest(dispatch, query);
+    if (!isEmpty(response?.data)) {
       dispatch({
         type: UPDATE_USERS_LIST,
         payload: response,
