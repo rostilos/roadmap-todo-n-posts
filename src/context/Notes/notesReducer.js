@@ -5,7 +5,7 @@ const actions = {
   [UPDATE_NOTES_LIST]: fetchNotesReducer,
 };
 
-export default function appReducer(state, { type, payload }) {
+export default function notesReducer(state, { type, payload }) {
   const action = actions[type];
 
   if (action) {
