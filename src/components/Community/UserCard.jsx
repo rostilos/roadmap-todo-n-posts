@@ -1,7 +1,7 @@
 import React from "react";
 import userImagePlaceHolder from "../../assets/images/user/user-image-placeholder.png";
 
-const NoteItem = function ({ userData }) {
+const UserCard = function ({ userData }) {
   const { firstname, lastname, email, birth_date } = userData;
   const fullname = `${firstname} ${lastname}`;
   return (
@@ -18,4 +18,4 @@ const NoteItem = function ({ userData }) {
   );
 };
 
-export default React.memo(NoteItem);
+export default React.memo(UserCard);

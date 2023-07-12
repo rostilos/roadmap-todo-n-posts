@@ -32,6 +32,7 @@
   
 }
 ._textarea {
+  box-sizing: border-box;
   background: $blue-transparent;
   border: none;
   box-shadow: $shadow-input;
@@ -39,6 +40,14 @@
   padding: 10px;
   min-height: 150px;
   outline: none;
+  &__error{
+    border: 1px solid $common-red;
+  } 
+  &__error-message{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: $common-red;
+  }
   &:focus {
     border: 1px solid $blue-semilight;
   }

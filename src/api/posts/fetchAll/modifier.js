@@ -1,4 +1,4 @@
-export default function fetchAllUsersModifier(response) {
+export default function fetchAllPostsrModifier(response) {
   const { pagination, data } = response;
   const { page, total, limit } = pagination;
   const nextPage = page < total ? parseInt(page) + 1 : null;

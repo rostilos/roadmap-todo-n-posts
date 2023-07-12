@@ -6,6 +6,7 @@
   box-shadow: $shadow-md;
   transition: $animation;
   opacity: 0;
+  position: relative;
   &__title{
     .page__title{
       margin: 0;

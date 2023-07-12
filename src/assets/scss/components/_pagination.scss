@@ -8,7 +8,7 @@
   height: 40px;
   border-radius: $border-sm;
   background-color: #fff;
-  border: 1px solid $grey-500;
+  border: 1px solid $blue-semitransparent;
   color: $grey-500;
   text-decoration: none;
   display: flex;
@@ -20,6 +20,7 @@
 
   &--current,
   &:hover {
+    border-color: $blue-semilight;
     background-color: $blue-transparent;
     color: $blue-dark;
   }

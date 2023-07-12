@@ -1,7 +1,7 @@
 import Login from "../pages/Login/Login";
 import Community from "./Community/Community";
 import Notes from "./Notes/Notes";
-import PostList from "./Posts/PostList";
+import Posts from "./Posts/Posts";
 import UserAccount from "./UserAccount/UserAccount";
 // import Notes from "../pages/Notes/Notes";
 // import PostList from "../pages/Posts/PostList";
@@ -26,7 +26,7 @@ const pagesData = [
   },
   {
     path: "/posts",
-    element: <PostList />,
+    element: <Posts />,
     title: "Posts",
   },
   {

@@ -5,6 +5,7 @@ import App from "./App";
 import AppDataProvider from "./context/App/AppDataProvider";
 import NotesDataProvider from "./context/Notes/NotesDataProvider";
 import CommunityDataProvider from "./context/Community/CommunityDataProvider";
+import PostsDataProvider from "./context/Posts/PostsDataProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <AppDataProvider>
       <CommunityDataProvider>
         <NotesDataProvider>
-          <App />
+          <PostsDataProvider>
+            <App />
+          </PostsDataProvider>
         </NotesDataProvider>
       </CommunityDataProvider>
     </AppDataProvider>

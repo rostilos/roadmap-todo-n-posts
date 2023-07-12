@@ -35,4 +35,7 @@
     color: $common-red;
     font-weight: 700;
   }
+  &__content{
+    word-break: break-word;
+  }
 }

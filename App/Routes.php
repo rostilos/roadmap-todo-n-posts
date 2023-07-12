@@ -10,6 +10,8 @@ return [
         '/api/register' => 'AuthorizationController@register',
         '/api/user_update' => 'UserController@update',
         '/api/update_password' => 'UserController@updatePassword',
-        '/api/fetch_users' => 'UserController@getAllUsersData'
+        '/api/fetch_users' => 'UserController@getAllUsersData',
+        '/api/create_post' => 'PostsController@create',
+        '/api/fetch_posts' => 'PostsController@getAllPostsData',
     ],
 ];
