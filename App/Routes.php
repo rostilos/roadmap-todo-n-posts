@@ -8,8 +8,8 @@ return [
         '/api/delete_note' => 'NotesController@delete',
         '/api/login' => 'AuthorizationController@login',
         '/api/register' => 'AuthorizationController@register',
-        '/api/user_update' => 'UserControllerupdate',
-        '/api/update_password' => 'UserControllerupdatePassword',
-        '/api/fetch_users' => 'UserControllergetAllUsersData'
+        '/api/user_update' => 'UserController@update',
+        '/api/update_password' => 'UserController@updatePassword',
+        '/api/fetch_users' => 'UserController@getAllUsersData'
     ],
 ];
