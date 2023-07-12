@@ -4,14 +4,17 @@ import "./index.css";
 import App from "./App";
 import AppDataProvider from "./context/App/AppDataProvider";
 import NotesDataProvider from "./context/Notes/NotesDataProvider";
+import CommunityDataProvider from "./context/Community/CommunityDataProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AppDataProvider>
-      <NotesDataProvider>
-        <App />
-      </NotesDataProvider>
+      <CommunityDataProvider>
+        <NotesDataProvider>
+          <App />
+        </NotesDataProvider>
+      </CommunityDataProvider>
     </AppDataProvider>
   </React.StrictMode>
 );
