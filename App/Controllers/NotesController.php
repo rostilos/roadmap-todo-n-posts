@@ -41,13 +41,13 @@ class NotesController extends Controller
         $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         $noteData = [
             'user_id' => $userId,
-            'title' => $postData['title'],
-            'content' => $postData['content'],
-            'priority' => $postData['priority'],
-            'created_at' => date('Y-m-d'),
+            'title' => $requestData['title'],
+            'content' => $requestData['content'],
+            'priority' => $requestData['priority'],
+            'created_at' => date('Y-m-d H:i:s'),
         ];
         // TODO: refactoring
         if($containsEmpty = in_array("", $noteData)){
@@ -67,12 +67,12 @@ class NotesController extends Controller
         }
 
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         $noteData = [
-            'id' => $postData['id'],
-            'title' => $postData['title'],
-            'content' => $postData['content'],
-            'priority' => $postData['priority']
+            'id' => $requestData['id'],
+            'title' => $requestData['title'],
+            'content' => $requestData['content'],
+            'priority' => $requestData['priority']
         ];
         // TODO: refactoring
         if($containsEmpty = in_array("", $noteData)){
@@ -90,7 +90,7 @@ class NotesController extends Controller
             return false;
         }
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
-        $postData = $this->getPostData();
-        $this->noteModel->delete($postData['id'], $userId);
+        $requestData = $this->getPostData();
+        $this->noteModel->delete($requestData['id'], $userId);
     }
 }

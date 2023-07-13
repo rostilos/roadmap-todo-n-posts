@@ -41,15 +41,15 @@ class UserController extends Controller
         }
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         $userData = [
-            'firstname' => $postData['firstname'],
-            'lastname' => $postData['lastname'],
-            'birth_date' => date('Y-m-d', strtotime($postData['birth_date']))
+            'firstname' => $requestData['firstname'],
+            'lastname' => $requestData['lastname'],
+            'birth_date' => date('Y-m-d', strtotime($requestData['birth_date']))
         ];
-        if(isset($postData['password']) && isset($postData['current_password'])){
-            $userData['password'] = md5($postData['password']);
-            $userData['current_password'] = md5($postData['current_password']);
+        if(isset($requestData['password']) && isset($requestData['current_password'])){
+            $userData['password'] = md5($requestData['password']);
+            $userData['current_password'] = md5($requestData['current_password']);
         }
         if($this->validator->isContainsEmptyValues($userData)){
             return false;
@@ -72,11 +72,11 @@ class UserController extends Controller
         }
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
 
-        if(isset($postData['new_password']) && isset($postData['current_password'])){
-            $passwordData['new_password'] = md5($postData['new_password']);
-            $passwordData['current_password'] = md5($postData['current_password']);
+        if(isset($requestData['new_password']) && isset($requestData['current_password'])){
+            $passwordData['new_password'] = md5($requestData['new_password']);
+            $passwordData['current_password'] = md5($requestData['current_password']);
 
             if ($passwordData = $this->userModel->updateUserPassword($passwordData, $userId)) {
                 return true;
@@ -93,14 +93,14 @@ class UserController extends Controller
         if(!$is_jwt_valid){
             return false;
         }
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         $page = 1;
         $limit = 5;
-        if(isset($postData['page'])){
-            $page = $postData['page'];
+        if(isset($requestData['page'])){
+            $page = $requestData['page'];
         }
-        if(isset($postData['limit'])){
-            $limit = $postData['limit'];
+        if(isset($requestData['limit'])){
+            $limit = $requestData['limit'];
         }
         $offset = ($page-1) * $limit;
         

@@ -42,13 +42,13 @@ class PostsController extends Controller
 
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
 
         $newPost = [
             'user_id' => $userId,
-            'title' => $postData['title'],
-            'content' => $postData['content'],
-            'created_at' => date('Y-m-d'),
+            'title' => $requestData['title'],
+            'content' => $requestData['content'],
+            'created_at' => date('Y-m-d H:i:s'),
         ];
         // TODO: refactoring
         if($this->validator->isContainsEmptyValues($newPost)){
@@ -61,18 +61,33 @@ class PostsController extends Controller
 
     public function getAllPostsData()
     {
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         $page = 1;
         $limit = 5;
-        if(isset($postData['page'])){
-            $page = $postData['page'];
+        $sortOrder = 'DESC';
+        
+        if(isset($requestData['page'])){
+            $page = $requestData['page'];
         }
-        if(isset($postData['limit'])){
-            $limit = $postData['limit'];
+        if(isset($requestData['limit'])){
+            $limit = $requestData['limit'];
+        }
+        if(isset($requestData['sort'])){
+            $sortOrder = $requestData['sort'];
         }
         $offset = ($page-1) * $limit;
         
-        $posts = $this->postModel->getAll($page,$offset,$limit);
+        $posts = $this->postModel->getAll($page,$offset,$limit,$sortOrder);
         $this->return_json($posts);
+    }
+
+    public function getPostById()
+    {
+        $requestData = $this->getPostData();
+        $postIdFromRequest = $requestData['id'];
+        $postData = $this->postModel->getPostById($postIdFromRequest);
+
+        $this->return_json(['data' => $postData]);
+
     }
 }

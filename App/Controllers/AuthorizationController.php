@@ -25,11 +25,11 @@ class AuthorizationController extends Controller
 
     public function login()
     {
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         if (
             $user = $this->user->login(
-                $postData['email'],
-                md5($postData['password'])
+                $requestData['email'],
+                md5($requestData['password'])
             )
         ) {
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
@@ -41,13 +41,13 @@ class AuthorizationController extends Controller
 
     public function register()
     {
-        $postData = $this->getPostData();
+        $requestData = $this->getPostData();
         $user = [
-            'firstname' => $postData['firstname'],
-            'lastname' => $postData['lastname'],
-            'password' => md5($postData['password']),
-            'email' => $postData['email'],
-            'birth_date' => date('Y-m-d', strtotime($postData['birth_date'])),
+            'firstname' => $requestData['firstname'],
+            'lastname' => $requestData['lastname'],
+            'password' => md5($requestData['password']),
+            'email' => $requestData['email'],
+            'birth_date' => date('Y-m-d', strtotime($requestData['birth_date'])),
         ];
         // TODO: refactoring
         if($containsEmpty = in_array("", $user)){

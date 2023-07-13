@@ -13,5 +13,6 @@ return [
         '/api/fetch_users' => 'UserController@getAllUsersData',
         '/api/create_post' => 'PostsController@create',
         '/api/fetch_posts' => 'PostsController@getAllPostsData',
+        '/api/fetch_post_view' => 'PostsController@getPostById',
     ],
 ];

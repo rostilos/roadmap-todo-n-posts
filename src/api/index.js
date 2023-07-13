@@ -11,6 +11,7 @@ import deleteNote from "./notes/delete";
 
 import createPost from "./posts/create";
 import fetchAllPosts from "./posts/fetchAll";
+import fetchPostView from "./posts/fetchPostView";
 
 
 export const ajaxLoginRequest = ajaxLogin;
@@ -26,3 +27,4 @@ export const deleteNoteRequest = deleteNote;
 
 export const createPostRequest = createPost;
 export const fetchAllPostsRequest = fetchAllPosts;
+export const fetchPostViewRequest = fetchPostView;

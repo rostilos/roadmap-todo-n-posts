@@ -1,13 +1,11 @@
-import { fetchAllPostsRequest, createPostRequest } from "../../../api";
+import { fetchPostViewRequest, fetchAllPostsRequest, createPostRequest } from "../../../api";
 
 import { UPDATE_POSTS_LIST } from "./types";
 import { isEmpty } from "lodash";
 
-
 export async function fetchPostsAction(dispatch, query) {
   try {
     const response = await fetchAllPostsRequest(dispatch, query);
-    console.log(response);
     if (!isEmpty(response?.data)) {
       dispatch({
         type: UPDATE_POSTS_LIST,
@@ -19,6 +17,15 @@ export async function fetchPostsAction(dispatch, query) {
         payload: {},
       });
     }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchPostViewAction(dispatch, id) {
+  try {
+    const response = await fetchPostViewRequest(dispatch, id);
+    return response;
   } catch (error) {
     console.error(error);
   }
