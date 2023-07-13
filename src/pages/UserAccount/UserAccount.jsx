@@ -20,9 +20,13 @@ const UserAccount = function () {
 
   return (
     <div>
-      <div className="user-account _section">
-        <h1 className="page__title">Account Information</h1>
-        <div className="user-account__body">
+      <div className="user-account ">
+        <div className="_section">
+          <div className="notes-page__header"  style={{ margin: 0 }}>
+            <h1 className="page__title"  style={{ margin: 0 }}>Account Information</h1>
+          </div>
+        </div>
+        <div className="user-account__body _section">
           <div className="user-account__image">
             <img src={userImagePlaceHolder} alt="" />
           </div>

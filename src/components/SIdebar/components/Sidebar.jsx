@@ -4,6 +4,7 @@ import useAppContext from "../../../hook/useAppContext";
 import sidebarItems from "../utils/sidebarItems";
 import SidebarItem from "./SidebarItem";
 import logout from "../../../assets/images/sidebar/logout.svg";
+import user from "../../../assets/images/sidebar/user.svg";
 
 const Sidebar = function () {
   const navigate = useNavigate();
@@ -34,6 +35,15 @@ const Sidebar = function () {
   return (
     <aside className="page__sidebar sidebar" style={{ padding: 0 }}>
       <div className="_section">
+        {!isLoggedIn && (
+          <SidebarItem
+            label="Login"
+            path="/login"
+            icon={user}
+            handleClick={() => handleClick("/login")}
+            isActive={location.pathname === "/login"}
+          />
+        )}
         {sidebarElements}
         {isLoggedIn && (
           <div className="nav-sidebar__item">

@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import pagesData from "../pagesData";
 import useAppContext from "../../hook/useAppContext";
@@ -6,8 +6,9 @@ import useAppContext from "../../hook/useAppContext";
 const Router = () => {
   const { isLoggedIn, customerData, setCustomerDataFromToken } = useAppContext();
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && location?.pathname !== "/posts") {
       navigate("/login");
     } else if (!customerData?.email) {
       setCustomerDataFromToken();
