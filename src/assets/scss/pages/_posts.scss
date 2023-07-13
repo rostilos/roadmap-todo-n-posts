@@ -1,45 +1,64 @@
-.post-preview{
-    &__body{
-        overflow: hidden;
-        cursor: pointer;
-        &:hover{
-            .post-preview__read-full{
-                opacity: 1;
-                visibility: visible;
-                pointer-events: all;
-            }
-        }
+.post-preview {
+  &__body {
+    overflow: hidden;
+    cursor: pointer;
+    &:hover {
+      .post-preview__read-full {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+      }
     }
-    &__title{
-        font-size: 16px;
-        font-weight: 600;
+  }
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  &__content {
+    margin-top: 12px;
+  }
+  &__author {
+    color: $grey-700;
+    margin-top: 12px;
+  }
+  &__created-at {
+    font-size: 12px;
+    color: $grey-500;
+    margin-top: 12px;
+  }
+  &__read-full {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $bg-transparent;
+    z-index: 10;
+    transition: $animation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.posts-sort-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+  @media screen and (max-width: $screen-2xl) {
+    margin-top: 20px;
+  }
+  @media screen and (max-width: $screen-xl) {
+    margin-top: 15px;
+  }
+  @media screen and (max-width: $screen-md) {
+    margin-top: 12px;
+  }
+  &__select {
+    @media screen and (max-width: $screen-sm) {
+      max-width: 50%;
     }
-    &__content{
-        margin-top: 12px;
-    }
-    &__author{
-        color: $grey-700;
-        margin-top: 12px;
-    }
-    &__created-at{
-        font-size: 12px;
-        color: $grey-500;
-        margin-top: 12px;
-    }
-    &__read-full{
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: $bg-transparent;
-        z-index: 10;
-        transition: $animation;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  }
 }

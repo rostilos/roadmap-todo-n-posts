@@ -12,10 +12,15 @@
       margin: 0;
     }
   }
+  @media screen and (max-width: $screen-2xl) {
+    margin-top: 20px;
+  }
   @media screen and (max-width: $screen-xl) {
+    margin-top: 15px;
     padding: 12px;
   }
   @media screen and (max-width: $screen-md) {
+    margin-top: 12px;
     padding: 10px;
   }
 
