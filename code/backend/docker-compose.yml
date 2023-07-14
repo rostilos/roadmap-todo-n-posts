@@ -13,7 +13,7 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www/html
     volumes:
-      - ../../php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./docker/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
 
@@ -25,7 +25,7 @@ services:
     tty: true
     volumes:
       - ./:/var/www/html
-      - ../../nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "80:80"
       - "443:443"
