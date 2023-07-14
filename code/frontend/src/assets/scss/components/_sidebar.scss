@@ -1,0 +1,44 @@
+.sidebar {
+}
+.nav-sidebar {
+  &__item {
+    min-height: 32px;
+    padding: 5px;
+    border-radius: $border-sm;
+    transition: $animation;
+    button {
+      padding: 8px;
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      align-items: center;
+      @media screen and (max-width: $screen-lg) {
+        // padding: 4px;
+        span {
+          display: none;
+        }
+      }
+    }
+    &:not(:last-child) {
+      margin-bottom: 24px;
+      @media screen and (max-width: $screen-lg) {
+        margin-bottom: 16px;
+      }
+      @media screen and (max-width: $screen-md) {
+        margin-bottom: 8px;
+      }
+    }
+    &:hover,
+    &--active {
+      background-color: $blue-transparent;
+    }
+  }
+  &__icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+    @media screen and (max-width: $screen-lg) {
+      margin-right: 0;
+    }
+  }
+}

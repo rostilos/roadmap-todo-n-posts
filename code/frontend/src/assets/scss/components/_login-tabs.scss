@@ -1,0 +1,22 @@
+.login-tabs{
+    margin-top: 25px;
+    max-width: 656px;
+    background-color: $section-bg;
+    border-radius: $border-md;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: $shadow-md;
+    &__item{
+        height: 100%;
+        padding: 12px 14px;
+        background-color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: $animation;
+        &--active{
+            background-color: $blue-transparent;
+        }
+    }
+}
