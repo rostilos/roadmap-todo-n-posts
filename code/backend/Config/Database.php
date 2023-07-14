@@ -10,7 +10,7 @@ class Database {
      * 
      * @var string
      */
-    const DB_HOST = 'localhost';
+    const DB_HOST = 'db';
 
     /**
      * Database name
@@ -31,5 +31,5 @@ class Database {
      * 
      * @var string
      */
-    const DB_PASSWORD = '12117aA';
+    const DB_PASSWORD = '';
 }
