@@ -12,7 +12,7 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www/html
     volumes:
-      - ./docker/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./php/php.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
 
@@ -23,8 +23,8 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ./:/var/www/html
-      - ./docker/default.conf:/etc/nginx/conf.d/default.conf
+      - ./code/:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "80:80"
       - "443:443"
@@ -45,9 +45,13 @@ services:
     networks:
       - app-network
     volumes:
+      - db_data:/var/lib/mysql
       - ./db-dump:/docker-entrypoint-initdb.d
 
 #Docker Networks
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  db_data:

@@ -15,5 +15,5 @@ sudo service nginx stop
 sudo service mysql stop
 
 # Запуск контейнеров
-docker-compose -f ../code/backend/docker-compose.yml up -d
-docker-compose -f ../code/frontend/docker-compose.yml up -d
+docker-compose -f ../app/backend/docker-compose.yml up -d
+docker-compose -f ../app/frontend/docker-compose.yml up -d
