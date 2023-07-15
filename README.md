@@ -5,8 +5,8 @@ The application is containerized, .sh scripts are used to use and run docker con
 ## Used stack
 Frontend : React \
 Backend : php \
-DB : MySQL \ 
-Web Server : Nginx \
+DB : MySQL \
+Web Server : Nginx
 
 ## Running the project : 
 
@@ -19,9 +19,7 @@ Then you can run the application:
 ### `cd ./scripts`
 ### `./run_app.sh`
 
-Browser access:
-
-### `http://localhost:3000/`
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 
 ## Available Scripts
