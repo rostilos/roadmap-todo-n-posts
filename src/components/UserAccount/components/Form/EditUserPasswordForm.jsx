@@ -43,8 +43,8 @@ const EditUserPasswordForm = function () {
     >
       {({ errors, touched }) => (
         <Form className="edit-user__form">
-          <TextInput label="Current Password" name="current_password" />
-          <TextInput label="New Password" name="new_password" />
+          <TextInput className="_input _input--small-height" label="Current Password" name="current_password" />
+          <TextInput className="_input _input--small-height" label="New Password" name="new_password" />
 
           <button className="_button" type="submit">
             Submit

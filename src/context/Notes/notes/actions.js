@@ -1,5 +1,10 @@
-import _get from "lodash.get";
-import { fetchNotesRequest, createNoteRequest, editNoteRequest, deleteNoteRequest } from "../../../api";
+import {
+  fetchNotesRequest,
+  createNoteRequest,
+  editNoteRequest,
+  deleteNoteRequest,
+  deleteNotesGroupRequest,
+} from "../../../api";
 
 import { UPDATE_NOTES_LIST } from "./types";
 import { isEmpty } from "lodash";
@@ -50,6 +55,15 @@ export async function editNoteAction(dispatch, noteData) {
 export async function deleteNoteAction(dispatch, noteData) {
   try {
     await deleteNoteRequest(dispatch, noteData);
+    fetchNotesAction(dispatch);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteNotesGroupAction(dispatch, priority) {
+  try {
+    await deleteNotesGroupRequest(dispatch, priority);
     fetchNotesAction(dispatch);
   } catch (error) {
     console.error(error);

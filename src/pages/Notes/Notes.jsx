@@ -7,6 +7,9 @@ import EditNote from "../../components/Notes/components/Form/EditNote";
 import NoteTabs from "../../components/Notes/components/NoteTabs";
 import useAppContext from "../../hook/useAppContext";
 
+import plus from "../../assets/images/common/plus.svg";
+import deleteicon from "../../assets/images/common/deleteicon.svg";
+
 const notePriorityIds = {
   2: "Important",
   1: "Medium priority",
@@ -19,7 +22,7 @@ const Notes = function () {
   const [editNoteData, setEditNoteData] = useState(null);
   const [activeTabId, setActiveTabId] = useState(0);
 
-  const { createNote, fetchNotes, userNotes, editNote, deleteNote } = useNotesContext();
+  const { createNote, fetchNotes, userNotes, editNote, deleteNote, deleteNotesGroup } = useNotesContext();
   const { setSuccessMessage, setErrorMessage } = useAppContext();
 
   useEffect(() => {
@@ -77,6 +80,15 @@ const Notes = function () {
     }
   };
 
+  const deleteNotesGroupRequest = async (priority) => {
+    try {
+      await deleteNotesGroup({ priority });
+    } catch (error) {
+      setErrorMessage("Something went wrong.");
+      console.error(error);
+    }
+  };
+
   const handleFilterChange = (id) => {
     setActiveTabId(id);
   };
@@ -93,10 +105,26 @@ const Notes = function () {
           <p className="notes-page__note-count">
             {notePriorityIds[activeTabId]} Notes ({Object.keys(filteredNotes).length})
           </p>
-          <div className="notes-page__button-new">
-            <button className="_button" type="button" onClick={() => setShowNewNoteForm(!showNewNoteForm)}>
-              Add new
+          <div className="notes-page__actions">
+            <button
+              className="notes-page__button-new"
+              type="button"
+              title="Create new note"
+              onClick={() => setShowNewNoteForm(!showNewNoteForm)}
+            >
+              <img src={plus} alt="" />
             </button>
+
+            {activeTabId !== 3 && !isEmpty(filteredNotes) && (
+              <button
+                className="notes-page__button-delete"
+                type="button"
+                title="Delete all notes from current group"
+                onClick={() => deleteNotesGroupRequest(activeTabId)}
+              >
+                <img src={deleteicon} alt="" />
+              </button>
+            )}
           </div>
         </div>
 

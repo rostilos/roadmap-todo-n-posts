@@ -143,12 +143,39 @@ class NotesController extends Controller
         if (!$is_jwt_valid) {
             $this->return_json(null, 'Invalid token provided', false);
         }
-        $userId = $this->jwt->getPayload($bearer_token)->user->id;
+
         $requestData = $this->getPostData();
-        $this->noteModel->delete($requestData['id'], $userId);
+        $this->noteModel->delete($requestData['id']);
         $this->return_json(
             null,
             'The note has been successfully deleted',
+            true
+        );
+    }
+
+    /**
+     * Method delete all existed user notes with selected priority
+     *
+     *
+     * @return array
+     * @access  public
+     */
+    public function deleteNotesByGroup()
+    {
+        $bearer_token = $this->jwt->get_bearer_token();
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
+        }
+        $userId = $this->jwt->getPayload($bearer_token)->user->id;
+        $requestData = $this->getPostData();
+
+        $this->noteModel->deleteNotesByGroup($userId, $requestData['priority']);
+        $this->return_json(
+            null,
+            'The notes has been successfully deleted',
             true
         );
     }

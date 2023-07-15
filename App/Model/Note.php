@@ -74,6 +74,28 @@ class Note extends Model
     }
 
     /**
+     * Method delete all existed user notes with selected priority
+     *
+     * @param int $userId
+     * @param int $priority
+     *
+     * @return void
+     * @access  public
+     */
+    public function deleteNotesByGroup($userId, $priority)
+    {
+        $query =
+            'DELETE FROM `user_notes` ' .
+            'WHERE `user_id`= ' .
+            "$userId " .
+            'AND `priority`=' .
+            "$priority";
+        $this->DB()
+            ->query($query)
+            ->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Method edit existed user note.
      *
      * @param array $noteData

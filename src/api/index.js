@@ -8,6 +8,7 @@ import fetchNotes from "./notes/fetch/";
 import createNote from "./notes/create";
 import editNote from "./notes/edit";
 import deleteNote from "./notes/delete";
+import deleteNotesGroup from "./notes/deleteGroup";
 
 import createPost from "./posts/create";
 import fetchAllPosts from "./posts/fetchAll";
@@ -24,6 +25,7 @@ export const fetchNotesRequest = fetchNotes;
 export const createNoteRequest = createNote;
 export const editNoteRequest = editNote;
 export const deleteNoteRequest = deleteNote;
+export const deleteNotesGroupRequest = deleteNotesGroup;
 
 export const createPostRequest = createPost;
 export const fetchAllPostsRequest = fetchAllPosts;

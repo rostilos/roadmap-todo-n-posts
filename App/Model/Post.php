@@ -37,7 +37,7 @@ class Post extends Model
      * @access  public
      */
 
-    //  TODO : refactoring this method...
+    //  TODO : refactoring this method ...
     public function getPostsCollection(
         $page,
         $offset,

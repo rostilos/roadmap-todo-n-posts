@@ -52,8 +52,8 @@ const EditUserForm = function ({ userData }) {
     >
       {({ errors, touched }) => (
         <Form className="edit-user__form">
-          <TextInput label="Firstname" name="firstname" />
-          <TextInput label="Lastname" name="lastname" />
+          <TextInput label="Firstname" className="_input _input--small-height" name="firstname" />
+          <TextInput label="Lastname" className="_input _input--small-height" name="lastname" />
 
           <label className="_input__label" htmlFor="birth_date">
             Date of Birth

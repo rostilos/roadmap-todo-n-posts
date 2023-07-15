@@ -28,7 +28,7 @@ const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm, showNew
         >
           {({ errors, touched }) => (
             <Form className="_form-popup__form">
-              <TextInput label="title" name="title" />
+              <TextInput label="Title" name="title" />
               <TextArea label="Content" name="content" rows="6" />
               <div className="_form-popup__priority">
                 <div>
