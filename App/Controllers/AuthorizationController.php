@@ -5,6 +5,8 @@ use Core\Request;
 use Core\Controller;
 use App\Model\User;
 use Core\Jwt;
+use Core\Validator;
+
 
 class AuthorizationController extends Controller
 {
@@ -18,10 +20,16 @@ class AuthorizationController extends Controller
      */
     private $user;
 
+    /**
+     * @var Validator
+     */
+    private $validator;
+
     public function __construct()
     {
         $this->jwt = new Jwt();
         $this->user = new User();
+        $this->validator = new Validator();
     }
 
     /**
