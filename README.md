@@ -13,6 +13,11 @@ Then you can run the application:
 ### `cd ./scripts`
 ### `./run_app.sh`
 
+Browser access:
+
+### `http://localhost:3000/`
+
+
 ## Available Scripts
 
 Access to the backend portion of the container : 
@@ -20,4 +25,6 @@ Access to the backend portion of the container :
 
 Access to mysql :
 ### `./mysql-bash.sh`
+
+
 
