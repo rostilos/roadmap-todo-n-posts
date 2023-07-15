@@ -3,10 +3,10 @@
 The application is containerized, .sh scripts are used to use and run docker containers.
 
 ## Used stack
-Frontend : react
-Backend : php
-DB : mysql
-Web Server : nginx
+Frontend : React \
+Backend : php \
+DB : MySQL \ 
+Web Server : Nginx \
 
 ## Running the project : 
 
