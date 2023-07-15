@@ -19,9 +19,7 @@ Then you can run the application:
 ### `cd ./scripts`
 ### `./run_app.sh`
 
-Browser access:
-
-### `http://localhost:3000/`
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 
 ## Available Scripts
