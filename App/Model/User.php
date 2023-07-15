@@ -13,15 +13,22 @@ class User extends Model
     /**
      * Login user.
      *
+     * @param string $email
+     * @param string $password
+     *
      * @return mixed
      * @access  public
      */
 
     public function login($email, $password)
     {
-        $query = 'SELECT * FROM `users` WHERE '
-                . '`email`=' . "'$email' " . 'AND '
-                . '`password`=' . "'$password'";
+        $query =
+            'SELECT * FROM `users` WHERE ' .
+            '`email`=' .
+            "'$email' " .
+            'AND ' .
+            '`password`=' .
+            "'$password'";
         $row = $this->DB()
             ->query($query)
             ->fetch(\PDO::FETCH_DEFAULT);
@@ -35,6 +42,8 @@ class User extends Model
     /**
      * Create new user.
      *
+     * @param array $user
+     *
      * @return int
      * @access  public
      */
@@ -42,11 +51,15 @@ class User extends Model
     public function create($user)
     {
         $userId = $this->insert($user);
+
         return $userId;
     }
 
     /**
      * Update User data
+     *
+     * @param array $userData
+     * @param int $userId
      *
      * @return mixed
      * @access  public
@@ -60,19 +73,27 @@ class User extends Model
             'birth_date' => $birthDate,
         ] = $userData;
 
-        $query = 'UPDATE `users` SET '
-                . '`firstname`=' . "'$firstname',"
-                . '`lastname`=' . "'$lastname',"
-                . '`birth_date`=' . "'$birthDate' "
-                . 'WHERE `id`=' . "$userId ";
+        $query =
+            'UPDATE `users` SET ' .
+            '`firstname`=' .
+            "'$firstname'," .
+            '`lastname`=' .
+            "'$lastname'," .
+            '`birth_date`=' .
+            "'$birthDate' " .
+            'WHERE `id`=' .
+            "$userId ";
 
         $this->DB()->query($query);
-        
+
         return $this->getUserById($userId);
     }
 
     /**
      * Update User password
+     *
+     * @param array $passwordData
+     * @param int $userId
      *
      * @return bool
      * @access  public
@@ -80,12 +101,18 @@ class User extends Model
 
     public function updateUserPassword($passwordData, $userId)
     {
-        if($passwordData['current_password'] === $this->getUserPasswordById($userId)){
+        if (
+            $passwordData['current_password'] ===
+            $this->getUserPasswordById($userId)
+        ) {
             $newPassword = $passwordData['new_password'];
 
-            $query = 'UPDATE `users` SET '
-            . '`password`=' . "'$newPassword' "
-            . 'WHERE `id`=' . "$userId ";
+            $query =
+                'UPDATE `users` SET ' .
+                '`password`=' .
+                "'$newPassword' " .
+                'WHERE `id`=' .
+                "$userId ";
             $this->DB()->query($query);
 
             return true;
@@ -96,11 +123,15 @@ class User extends Model
     /**
      * Method getting all users data ( except password )
      *
+     * @param int $page Current page ( configuration for pagination )
+     * @param int $offset Offset from zero index
+     * @param int $limit  Limit on the number of outputs per page
+     *
      * @return array
      * @access  public
      */
 
-    public function getAll($page,$offset, $limit)
+    public function getAll($page, $offset, $limit)
     {
         $query =
             'SELECT DISTINCT firstname,lastname,email,birth_date ' .
@@ -146,6 +177,8 @@ class User extends Model
 
     /**
      * Get User data by email
+     * 
+     * @param string $email
      *
      * @return mixed
      * @access  public
@@ -154,9 +187,11 @@ class User extends Model
     public function getUserByEmail($email)
     {
         $query =
-            'SELECT DISTINCT id,firstname,lastname,email,birth_date ' 
-            . 'FROM `users` '
-            . 'WHERE ' . '`email`=' . "'$email' ";
+            'SELECT DISTINCT id,firstname,lastname,email,birth_date ' .
+            'FROM `users` ' .
+            'WHERE ' .
+            '`email`=' .
+            "'$email' ";
         $row = $this->DB()
             ->query($query)
             ->fetch(\PDO::FETCH_DEFAULT);
@@ -169,6 +204,8 @@ class User extends Model
 
     /**
      * Get User data by id
+     * 
+     * @param int $id
      *
      * @return mixed
      * @access  private
@@ -177,9 +214,11 @@ class User extends Model
     private function getUserById($id)
     {
         $query =
-            'SELECT DISTINCT id,firstname,lastname,email,birth_date '
-            . 'FROM `users` '
-            . 'WHERE ' . '`id`=' . "'$id' ";
+            'SELECT DISTINCT id,firstname,lastname,email,birth_date ' .
+            'FROM `users` ' .
+            'WHERE ' .
+            '`id`=' .
+            "'$id' ";
         $row = $this->DB()
             ->query($query)
             ->fetch(\PDO::FETCH_DEFAULT);
@@ -192,6 +231,8 @@ class User extends Model
 
     /**
      * Get User password by id
+     * 
+     * @param int $id
      *
      * @return mixed
      * @access  private
@@ -201,8 +242,10 @@ class User extends Model
     {
         $query =
             'SELECT `password` ' .
-            'FROM `users` '
-            .'WHERE ' . '`id`=' . "'$id' ";
+            'FROM `users` ' .
+            'WHERE ' .
+            '`id`=' .
+            "'$id' ";
         $row = $this->DB()
             ->query($query)
             ->fetch(\PDO::FETCH_DEFAULT);

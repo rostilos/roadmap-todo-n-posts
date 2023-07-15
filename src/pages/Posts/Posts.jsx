@@ -16,7 +16,7 @@ const options = [
 const Posts = function () {
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
   const [selectedSortOption, setSelectedSortOption] = useState({ value: "DESC", label: "From new To old" });
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { setSuccessMessage, setErrorMessage, isLoggedIn } = useAppContext();
   const { createPost, fetchPosts, posts } = usePostsContext();
@@ -35,13 +35,13 @@ const Posts = function () {
 
   const submitCreatePostForm = async (values) => {
     try {
-      const status = await createPost(values);
+      const response = await createPost(values);
+      const { status, message } = response;
       if (status) {
         setShowCreatePostForm(false);
-        setSuccessMessage("You have successfully added a new note");
-        // navigate("/");
+        setSuccessMessage(message);
       } else {
-        setErrorMessage("Something went wrong");
+        setErrorMessage(message ?? "Something went wrong");
       }
     } catch (error) {
       setErrorMessage("Something went wrong");
@@ -53,6 +53,13 @@ const Posts = function () {
     setSelectedSortOption(selectedOption);
     const query = paramsToObject(searchParams);
     fetchPostsList({ ...query, sort: selectedOption?.value });
+  };
+
+  const handleFilterForUserChange = (e) => {
+    const filterByUser = e.target.checked;
+    const searchParamsAfterFilterChanges = { page: 1, limit: 5, userPostsOnly: filterByUser };
+    setSearchParams(searchParamsAfterFilterChanges);
+    fetchPostsList(searchParamsAfterFilterChanges);
   };
 
   return (
@@ -71,6 +78,9 @@ const Posts = function () {
       </div>
 
       <div className="posts-list__sort-toolbar posts-sort-toolbar">
+        <div className="posts-sort-toolbar__checkbox">
+          <input type="checkbox" name="filter_by_user" id="" onChange={handleFilterForUserChange} />
+        </div>
         <div className="posts-sort-toolbar__select">
           <Select value={selectedSortOption} onChange={handleSelectChange} options={options} />
         </div>
@@ -84,11 +94,18 @@ const Posts = function () {
       )}
       {data && <PostList posts={data} />}
 
-      <Toolbar
-        callbackNext={() => fetchPostsList({ page: pagination?.nextPage, limit: pagination?.limit })}
-        callbackPrev={() => fetchPostsList({ page: pagination?.prevPage, limit: pagination?.limit })}
-        pagination={pagination}
-      />
+      {data && (
+        <Toolbar
+          callbackNext={() => fetchPostsList({ page: pagination?.nextPage, limit: pagination?.limit })}
+          callbackPrev={() => fetchPostsList({ page: pagination?.prevPage, limit: pagination?.limit })}
+          pagination={pagination}
+        />
+      )}
+      {!data && (
+        <div className="_section">
+          <p>No posts were found for this query</p>
+        </div>
+      )}
     </div>
   );
 };

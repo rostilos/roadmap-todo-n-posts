@@ -13,27 +13,30 @@ const Login = function () {
   const submitLoginHandler = async (values) => {
     try {
       const loginResponse = await ajaxLogin(values);
-      const loggedIn = !!loginResponse?.status;
+      const { status, message } = loginResponse;
+      const loggedIn = !!status;
+
       if (loggedIn) {
-        setSuccessMessage("You are successfully logged in!");
+        setSuccessMessage(message);
         navigate("/");
       } else {
-        setErrorMessage("Something went wrong. Check login data");
+        setErrorMessage(message || "Something went wrong. Check login data");
       }
-      console.log(`login status: ${loggedIn}`);
     } catch (error) {
-      // setPageLoader(false);
+      setErrorMessage("Something went wrong. Check login data");
       console.error(error);
     }
   };
   const submitRegisterHandler = async (values) => {
     try {
-      const userToken = await register(values);
-      if (userToken) {
-        setSuccessMessage("You have successfully registered your account");
+      const response = await register(values);
+      const { status, message, userToken } = response;
+
+      if (userToken && status) {
+        setSuccessMessage(message);
         navigate("/");
       } else {
-        setErrorMessage("Something went wrong. Check data");
+        setErrorMessage(message || "Something went wrong. Check login data");
       }
     } catch (error) {
       setErrorMessage("Something went wrong. Check data");

@@ -26,26 +26,25 @@ const Notes = function () {
     fetchNotes();
   }, [fetchNotes]);
 
-  const filteredNotes =
-    activeTabId === 3
-      ? userNotes
-      : Object.keys(userNotes)
-          .filter((key) => userNotes[key].priority === activeTabId)
-          .reduce((obj, key) => {
-            return Object.assign(obj, {
-              [key]: userNotes[key],
-            });
-          }, {});
+  const filterByPriority = () => {
+    return Object.keys(userNotes)
+      .filter((key) => userNotes[key].priority === activeTabId)
+      .reduce((obj, key) => {
+        return Object.assign(obj, {
+          [key]: userNotes[key],
+        });
+      }, {});
+  };
 
   const submitCreateNoteForm = async (values) => {
     try {
-      const status = await createNote(values);
+      const response = await createNote(values);
+      const { status, message } = response;
       if (status) {
         setShowNewNoteForm(false);
-        setSuccessMessage("You have successfully added a new note");
-        // navigate("/");
+        setSuccessMessage(message);
       } else {
-        setErrorMessage("Something went wrong");
+        setErrorMessage(message ?? "Something went wrong");
       }
     } catch (error) {
       setErrorMessage("Something went wrong");
@@ -53,41 +52,27 @@ const Notes = function () {
     }
   };
 
-  const submitEditNoteForm = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const noteData = {
-      id: formData.get("id"),
-      title: formData.get("title"),
-      content: formData.get("content"),
-      priority: formData.get("priority"),
-    };
+  const submitEditNoteForm = async (values) => {
     try {
-      const status = await editNote(noteData);
+      const response = await editNote(values);
+      const { status, message } = response;
       if (status) {
         setEditNoteData(null);
-        // setSuccessMessage("You have successfully registered your account");
-        // navigate("/");
+        setSuccessMessage(message);
       } else {
-        // setErrorMessage("Something went wrong. Check data");
+        setErrorMessage(message ?? "Something went wrong");
       }
     } catch (error) {
-      // setErrorMessage("Something went wrong. Check data");
+      setErrorMessage("Something went wrong");
       console.error(error);
     }
   };
 
   const deleteNoteRequest = async (id) => {
     try {
-      const status = await deleteNote({ id: id });
-      if (status) {
-        // setSuccessMessage("You have successfully registered your account");
-        // navigate("/");
-      } else {
-        // setErrorMessage("Something went wrong. Check data");
-      }
+      await deleteNote({ id: id });
     } catch (error) {
-      // setErrorMessage("Something went wrong. Check data");
+      setErrorMessage("Something went wrong.");
       console.error(error);
     }
   };
@@ -95,6 +80,8 @@ const Notes = function () {
   const handleFilterChange = (id) => {
     setActiveTabId(id);
   };
+
+  const filteredNotes = activeTabId === 3 ? userNotes : filterByPriority();
 
   return (
     <div className="notes-page">

@@ -19,7 +19,7 @@ const sidebarItems = [
   {
     label: "Posts",
     icon: news,
-    path: "/posts",
+    path: "/posts?page=1&limit=5",
     loginRequired: false,
   },
   {

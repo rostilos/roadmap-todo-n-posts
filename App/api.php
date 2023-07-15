@@ -2,14 +2,14 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Обработка префлайт-запроса
+    // Preflight request handling
     exit();
 }
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Define path to application directory
+// Path to application directory
 define('APPLICATION_PATH', substr(realpath(dirname(__FILE__)), 0, -4));
 require '../Core/Psr4AutoloaderClass.php';
 

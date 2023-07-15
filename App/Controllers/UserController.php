@@ -23,21 +23,29 @@ class UserController extends Controller
      * @var Validator
      */
     private $validator;
-    
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->jwt = new Jwt();
         $this->userModel = new UserModel();
         $this->validator = new Validator();
     }
 
-    public function update()
+    /**
+     * User data update
+     *
+     * @return array
+     * @access  public
+     */
+    public function updateUserData()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
 
-        if(!$is_jwt_valid){
-            return false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
         }
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
@@ -45,66 +53,116 @@ class UserController extends Controller
         $userData = [
             'firstname' => $requestData['firstname'],
             'lastname' => $requestData['lastname'],
-            'birth_date' => date('Y-m-d', strtotime($requestData['birth_date']))
+            'birth_date' => date(
+                'Y-m-d',
+                strtotime($requestData['birth_date'])
+            ),
         ];
-        if(isset($requestData['password']) && isset($requestData['current_password'])){
+        if (
+            isset($requestData['password']) &&
+            isset($requestData['current_password'])
+        ) {
             $userData['password'] = md5($requestData['password']);
-            $userData['current_password'] = md5($requestData['current_password']);
+            $userData['current_password'] = md5(
+                $requestData['current_password']
+            );
         }
-        if($this->validator->isContainsEmptyValues($userData)){
-            return false;
+        if ($this->validator->isContainsEmptyValues($userData)) {
+            $this->return_json(
+                null,
+                'Check that your e-mail and password are correct',
+                false
+            );
         }
+
         if ($updatedUserData = $this->userModel->update($userData, $userId)) {
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
             $payload = ['user' => $updatedUserData];
             $jwtToken = $this->jwt->generate_jwt($headers, $payload);
-            $this->return_json(['status' => $jwtToken]);
+
+            $this->return_json(
+                ['userToken' => $jwtToken],
+                'Account data has been successfully updated',
+                true
+            );
         }
+
+        $this->return_json(null, 'Something went wrong', false);
     }
 
-    public function updatePassword()
+    /**
+     * User password update
+     *
+     * @return array
+     * @access  public
+     */
+    public function updateUserPassword()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
 
-        if(!$is_jwt_valid){
-            return false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
         }
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
         $requestData = $this->getPostData();
 
-        if(isset($requestData['new_password']) && isset($requestData['current_password'])){
+        if (
+            isset($requestData['new_password']) &&
+            isset($requestData['current_password'])
+        ) {
             $passwordData['new_password'] = md5($requestData['new_password']);
-            $passwordData['current_password'] = md5($requestData['current_password']);
+            $passwordData['current_password'] = md5(
+                $requestData['current_password']
+            );
 
-            if ($passwordData = $this->userModel->updateUserPassword($passwordData, $userId)) {
-                return true;
+            if (
+                $passwordData = $this->userModel->updateUserPassword(
+                    $passwordData,
+                    $userId
+                )
+            ) {
+                $this->return_json(
+                    null,
+                    'User password has been successfully updated',
+                    true
+                );
             }
         }
-        return false;
-        
+        $this->return_json(null, 'Something went wrong', false);
     }
 
+
+    /**
+     * Get all users data ( except password )
+     *
+     * @return array
+     * @access  public
+     */
     public function getAllUsersData()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
-        if(!$is_jwt_valid){
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
+        if (!$is_jwt_valid) {
             return false;
         }
         $requestData = $this->getPostData();
         $page = 1;
         $limit = 5;
-        if(isset($requestData['page'])){
+        if (isset($requestData['page'])) {
             $page = $requestData['page'];
         }
-        if(isset($requestData['limit'])){
+        if (isset($requestData['limit'])) {
             $limit = $requestData['limit'];
         }
-        $offset = ($page-1) * $limit;
-        
-        $users = $this->userModel->getAll($page,$offset,$limit);
-        $this->return_json($users);
+        $offset = ($page - 1) * $limit;
+
+        $users = $this->userModel->getAll($page, $offset, $limit);
+        $this->return_json($users, null, true);
     }
 }

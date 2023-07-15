@@ -16,11 +16,10 @@ export function setLoggedInStatusAction(dispatch, status) {
 export async function ajaxLoginAction(dispatch, userCredentials) {
   try {
     const response = await ajaxLoginRequest(dispatch, userCredentials);
-    const { errors, status } = response;
+    const { status, userToken } = response;
 
-    if (!errors && status) {
-      const signInToken = status;
-      LocalStorage.saveUserToken(signInToken);
+    if (userToken && status) {
+      LocalStorage.saveUserToken(userToken);
     }
     setLoggedInStatusAction(dispatch, !!status);
 
@@ -35,18 +34,13 @@ export async function ajaxLoginAction(dispatch, userCredentials) {
 export async function registerAction(dispatch, userData) {
   try {
     const response = await registerRequest(dispatch, userData);
-    const { errors, status } = response;
-    if (!errors && status) {
-      const signInToken = status;
-      LocalStorage.saveUserToken(signInToken);
+    const { status, userToken } = response;
+    if (userToken && status) {
+      LocalStorage.saveUserToken(userToken);
       setLoggedInStatusAction(dispatch, true);
-      return signInToken;
     }
-    LocalStorage.removeUserDataFromStorage();
-    setLoggedInStatusAction(dispatch, false);
+    return response;
   } catch (error) {
-    LocalStorage.removeUserDataFromStorage();
-    setLoggedInStatusAction(dispatch, false);
     console.error(error);
   }
   return false;
@@ -55,13 +49,13 @@ export async function registerAction(dispatch, userData) {
 export async function updateUserAction(dispatch, userData) {
   try {
     const response = await updateUserRequest(dispatch, userData);
-    const { errors, status } = response;
-    if (!errors && status) {
-      const signInToken = status;
-      LocalStorage.saveUserToken(signInToken);
+    const { status, userToken } = response;
+
+    if (userToken && status) {
+      LocalStorage.saveUserToken(userToken);
       setCustomerDataFromTokenAction(dispatch);
-      return signInToken;
     }
+    return response;
   } catch (error) {
     console.error(error);
   }
@@ -71,8 +65,7 @@ export async function updateUserAction(dispatch, userData) {
 export async function updateUserPasswordAction(dispatch, passwordData) {
   try {
     const response = await updateUserPasswordRequest(dispatch, passwordData);
-    const { status } = response;
-    return status;
+    return response;
   } catch (error) {
     console.error(error);
     return false;
