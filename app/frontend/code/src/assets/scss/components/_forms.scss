@@ -10,26 +10,31 @@
   min-width: 200px;
   height: 44px;
   margin-bottom: 16px;
-  &__error{
+  @media screen and (max-width: $screen-xl) {
+    height: 38px;
+  }
+  @media screen and (max-width: $screen-md) {
+    height: 32px;
+  }
+  &__error {
     border: 1px solid $common-red;
   }
-  &__error-message{
+  &__error-message {
     margin-top: -10px;
     margin-bottom: 8px;
     color: $common-red;
   }
-  &__label{
+  &__label {
     font-weight: 500;
     display: inline-block;
     margin-bottom: 6px;
   }
   &:focus {
-    border: 1px solid $blue-semilight;
+    border: 2px solid $blue-dark;
   }
-  &--small-height{
+  &--small-height {
     height: 30px;
   }
-  
 }
 ._textarea {
   box-sizing: border-box;
@@ -40,10 +45,10 @@
   padding: 10px;
   min-height: 150px;
   outline: none;
-  &__error{
+  &__error {
     border: 1px solid $common-red;
-  } 
-  &__error-message{
+  }
+  &__error-message {
     margin-top: 8px;
     margin-bottom: 8px;
     color: $common-red;
@@ -51,9 +56,6 @@
   &:focus {
     border: 1px solid $blue-semilight;
   }
-}
-label {
-  cursor: pointer;
 }
 ._radio {
   padding-left: 24px;
@@ -74,6 +76,9 @@ label {
     left: 3px;
     background: $blue-medium;
   }
+  &:focus:before {
+    border: 1px solid $blue-dark;
+  }
   &:checked:after {
     opacity: 1;
   }
@@ -89,4 +94,51 @@ label {
     transform: translateY(-50%);
     position: absolute;
   }
+}
+._checkbox-wrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+._checkbox {
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 1px solid $blue-semilight;
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  margin-right: 6px;
+  transition: $animation;
+  border-radius: $border-sm;
+
+  &:after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: $animation;
+    opacity: 0;
+    left: 3px;
+    background: $blue-medium;
+  }
+  &:focus {
+    outline: 1px solid $blue-dark;
+  }
+  &:checked {
+    border-color: $blue-medium;
+    &:after {
+      opacity: 1;
+    }
+  }
+  & + label {
+    display: inline-block;
+    font-weight: 500;
+  }
+}
+label {
+  cursor: pointer;
 }

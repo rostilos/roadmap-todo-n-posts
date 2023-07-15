@@ -34,10 +34,11 @@ export async function fetchPostViewAction(dispatch, id) {
 export async function createPostAction(dispatch, newPostData) {
   try {
     const response = await createPostRequest(dispatch, newPostData);
-    // if (response) {
-    //   fetchNotesAction(dispatch);
-    //   return response;
-    // }
+    const { status } = response;
+    if (status) {
+      fetchPostsAction(dispatch);
+    }
+    return response;
   } catch (error) {
     console.error(error);
   }

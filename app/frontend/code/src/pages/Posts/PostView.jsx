@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import usePostsContext from "../../hook/usePostsContext";
@@ -11,18 +12,18 @@ const PostView = function () {
     if (!postData) {
       async function fetchData() {
         const response = await fetchPostView({ id: id });
-        if (response) {
-          setPostData(response);
+        if (response?.data) {
+          setPostData(response?.data);
         }
       }
       fetchData();
     }
   }, []);
 
-  if (!postData?.data) {
+  if (isEmpty(postData)) {
     return;
   }
-  const { firstname, lastname, title, content, created_at } = postData?.data;
+  const { firstname, lastname, title, content, created_at } = postData;
   const fullname = `${firstname} ${lastname}`;
 
   return (
@@ -31,11 +32,9 @@ const PostView = function () {
         <div className="notes-page__header" style={{ margin: 0 }}>
           <h1 className="page__title">Article View</h1>
 
-          <div className="notes-page__button-new">
-            <Link className="_button" to="/posts">
-              Back
-            </Link>
-          </div>
+          <Link className="_button" to="/posts">
+            Back
+          </Link>
         </div>
       </div>
       <div className="post-view__body _section">

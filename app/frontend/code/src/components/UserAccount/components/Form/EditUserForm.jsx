@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "../../../Common/Form/ErrorMessage";
 import useAppContext from "../../../../hook/useAppContext";
+import TextInput from "../../../Common/Form/TextInput";
 
 const sixteen_years_ago = dayjs().subtract(16, "year").format("YYYY-MM-DD");
 
@@ -19,7 +20,7 @@ const EditUserSchema = Yup.object().shape({
 
 const EditUserForm = function ({ userData }) {
   const { firstname, lastname, birth_date } = userData;
-  const { updateUser, setSuccessMessage, setErrorMessage } = useAppContext();
+  const { updateUser, setErrorMessage, setSuccessMessage } = useAppContext();
 
   const initialValues = {
     firstname,
@@ -30,11 +31,12 @@ const EditUserForm = function ({ userData }) {
   const submitEditUserHandler = async (values) => {
     const { firstname, lastname, birth_date } = values;
     try {
-      const userToken = await updateUser({ firstname, lastname, birth_date });
-      if (userToken) {
-        setSuccessMessage("You have successfully edited your account");
+      const response = await updateUser({ firstname, lastname, birth_date });
+      const { message, status } = response;
+      if (status) {
+        setSuccessMessage(message);
       } else {
-        setErrorMessage("Something went wrong. Check data");
+        setErrorMessage(message || "Something went wrong. Check login data");
       }
     } catch (error) {
       setErrorMessage("Something went wrong. Check data");
@@ -50,19 +52,9 @@ const EditUserForm = function ({ userData }) {
     >
       {({ errors, touched }) => (
         <Form className="edit-user__form">
-          <label className="_input__label" htmlFor="firstname">
-            Firstname
-          </label>
-          <Field
-            className={`_input _input--small-height ${errors.firstname && touched.firstname ? "_input__error" : ""}`}
-            name="firstname"
-          />
-          <ErrorMessage error={errors.firstname} touched={touched.firstname} />
-          <label className="_input__label" htmlFor="lastname">
-            Lastname
-          </label>
-          <Field className={`_input _input--small-height ${errors.lastname && touched.lastname ? "_input__error" : ""}`} name="lastname" />
-          <ErrorMessage error={errors.lastname} touched={touched.lastname} />
+          <TextInput label="Firstname" className="_input _input--small-height" name="firstname" />
+          <TextInput label="Lastname" className="_input _input--small-height" name="lastname" />
+
           <label className="_input__label" htmlFor="birth_date">
             Date of Birth
           </label>

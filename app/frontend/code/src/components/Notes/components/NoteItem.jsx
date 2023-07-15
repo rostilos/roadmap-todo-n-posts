@@ -1,4 +1,5 @@
 import React from "react";
+import deleteicon from "../../../assets/images/common/deleteicon.svg";
 
 const NoteItem = function ({ noteData, setEditNoteData, deleteNoteRequest }) {
   return (
@@ -8,12 +9,13 @@ const NoteItem = function ({ noteData, setEditNoteData, deleteNoteRequest }) {
         <p className="note__content">{noteData?.content}</p>
         <p className="note__create-date">{noteData?.created_at}</p>
         <button onClick={() => setEditNoteData(noteData)} className="note__edit _button" type="button">
-          Edit
+          <span>Edit</span>
         </button>
       </div>
       <div className="note__actions">
         <button onClick={() => deleteNoteRequest(noteData?.id)} className="note__delete" type="button">
-          Delete
+          <span>Delete</span>
+          <img className="_action-icon" src={deleteicon} alt="" />
         </button>
       </div>
     </div>

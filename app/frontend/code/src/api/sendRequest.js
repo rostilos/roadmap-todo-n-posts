@@ -1,10 +1,11 @@
 import { config } from "../config";
 import LocalStorage from "../utils/localStorage";
 import { SET_PAGE_MESSAGE } from "../context/App/page/types";
-import { responseDataEmpty, responseContainErrors } from "./utility";
 
 export const RESPONSE_TEXT = "text";
 export const RESPONSE_JSON = "json";
+export const RESPONSE_ERR_STATUS = "error";
+export const RESPONSE_SUCCESS_STATUS = "success"
 
 export default function sendRequest(
   dispatch,
@@ -35,19 +36,19 @@ export default function sendRequest(
       return response.json();
     })
     .then((response) => {
-      if (!responseContainErrors(response) || !responseDataEmpty(response)) {
+      if (response?.status === RESPONSE_SUCCESS_STATUS) {
         return response;
       }
 
       dispatch({
         type: SET_PAGE_MESSAGE,
-        payload: { type: "error", message: response?.error?.message || "Something went wrong" },
+        payload: { type: RESPONSE_ERR_STATUS, message: response?.message || "Something went wrong" },
       });
     })
     .catch((err) => {
       dispatch({
         type: SET_PAGE_MESSAGE,
-        payload: { type: "error", message: "Something went wrong" },
+        payload: { type: RESPONSE_ERR_STATUS, message: "Something went wrong" },
       });
       console.error(err);
       throw err;

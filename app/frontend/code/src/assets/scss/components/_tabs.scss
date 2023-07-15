@@ -1,5 +1,9 @@
 ._tabs {
   display: flex;
+  @media screen and (max-width: $screen-sm) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
   &__item {
     box-shadow: $shadow-md;
     border: 1px solid $blue-semitransparent;

@@ -1,7 +1,52 @@
 .notes-page {
-  &__button-new {
+  &__actions {
     display: flex;
     justify-content: flex-end;
+  }
+  &__button-new,
+  &__button-delete {
+    flex-shrink: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition: $animation;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:active {
+      transform: scale(0.9);
+    }
+    img {
+      width: 20px;
+      height: 20px;
+    }
+    @media screen and (max-width: $screen-xl) {
+      width: 32px;
+      height: 32px;
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    @media screen and (max-width: $screen-md) {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  &__button-new {
+    border: 1px solid $blue-semilight;
+
+    &:hover {
+      background-color: $blue-transparent;
+    }
+  }
+  &__button-delete {
+    border: 1px solid $common-red;
+    margin-left: 8px;
+
+    &:hover {
+      background-color: rgba(255, 0, 0, 0.1);
+    }
   }
   &__note-count {
     display: flex;
@@ -18,4 +63,3 @@
     align-items: center;
   }
 }
-

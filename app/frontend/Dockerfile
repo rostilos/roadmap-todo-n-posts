@@ -3,7 +3,7 @@ FROM node:14 as frontend
 
 WORKDIR /app
 
-COPY ./code/package.json package-lock.json ./
+COPY ./code/package.json ./code/package-lock.json ./
 RUN npm ci --silent
 COPY ./code/public ./public
 COPY ./code/src ./src

@@ -1,7 +1,6 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import ErrorMessage from "../../Common/Form/ErrorMessage";
 import TextArea from "../../Common/Form/TextArea";
 import TextInput from "../../Common/Form/TextInput";
 
@@ -27,7 +26,7 @@ const CreatePost = function ({ submitCreatePostForm, setShowCreatePostForm, show
         >
           {({ errors, touched }) => (
             <Form className="_form-popup__form">
-              <TextInput label="title" name="title" />
+              <TextInput label="Title" name="title" />
               <TextArea label="Content" name="content" rows="6" />
 
               <button className="_button" type="submit">

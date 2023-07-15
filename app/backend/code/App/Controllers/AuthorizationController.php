@@ -5,6 +5,8 @@ use Core\Request;
 use Core\Controller;
 use App\Model\User;
 use Core\Jwt;
+use Core\Validator;
+
 
 class AuthorizationController extends Controller
 {
@@ -18,11 +20,24 @@ class AuthorizationController extends Controller
      */
     private $user;
 
-    public function __construct() {
+    /**
+     * @var Validator
+     */
+    private $validator;
+
+    public function __construct()
+    {
         $this->jwt = new Jwt();
         $this->user = new User();
+        $this->validator = new Validator();
     }
 
+    /**
+     * Login user.
+     *
+     * @return array
+     * @access  public
+     */
     public function login()
     {
         $requestData = $this->getPostData();
@@ -35,10 +50,27 @@ class AuthorizationController extends Controller
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
             $payload = ['user' => $user];
             $jwtToken = $this->jwt->generate_jwt($headers, $payload);
-            $this->return_json(['status' => $jwtToken]);
+
+            $this->return_json(
+                ['userToken' => $jwtToken],
+                'You have successfully logged in',
+                true
+            );
+        } else {
+            $this->return_json(
+                null,
+                'Failed to log in, check if your login/password is correct',
+                false
+            );
         }
     }
 
+    /**
+     * Register user.
+     *
+     * @return array
+     * @access  public
+     */
     public function register()
     {
         $requestData = $this->getPostData();
@@ -47,18 +79,31 @@ class AuthorizationController extends Controller
             'lastname' => $requestData['lastname'],
             'password' => md5($requestData['password']),
             'email' => $requestData['email'],
-            'birth_date' => date('Y-m-d', strtotime($requestData['birth_date'])),
+            'birth_date' => date(
+                'Y-m-d',
+                strtotime($requestData['birth_date'])
+            ),
         ];
-        // TODO: refactoring
-        if($containsEmpty = in_array("", $user)){
-            return false;
+        if ($this->validator->isContainsEmptyValues($user)) {
+            $this->return_json(null, 'Specify a valid login/password', false);
         }
         if ($user_id = $this->user->create($user)) {
             $user['id'] = $user_id;
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
             $payload = ['user' => $user];
             $jwtToken = $this->jwt->generate_jwt($headers, $payload);
-            $this->return_json(['status' => $jwtToken]);
+
+            $this->return_json(
+                ['userToken' => $jwtToken],
+                'You have successfully created a new account',
+                true
+            );
+        } else {
+            $this->return_json(
+                null,
+                'There is already a user with this email address',
+                false
+            );
         }
     }
 }

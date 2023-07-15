@@ -15,6 +15,9 @@
   padding: 16px;
   &__actions {
     align-self: center;
+    @media screen and (max-width: $screen-md){
+      align-self: flex-start;
+    }
   }
   &__body {
     border-left: 4px solid rgba(17, 81, 115, 0.5);
@@ -25,6 +28,9 @@
   }
   &__edit {
     margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__create-date {
     font-size: 14px;
@@ -34,6 +40,17 @@
   &__delete {
     color: $common-red;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    span{
+      margin-right: 4px;
+    }
+    @media screen and (max-width: $screen-md){
+      padding: 0;
+      span{
+        display: none;
+      }
+    }
   }
   &__content{
     word-break: break-word;

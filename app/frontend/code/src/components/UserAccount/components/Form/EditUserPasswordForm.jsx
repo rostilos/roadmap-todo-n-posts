@@ -1,8 +1,8 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import ErrorMessage from "../../../Common/Form/ErrorMessage";
 import useAppContext from "../../../../hook/useAppContext";
+import TextInput from "../../../Common/Form/TextInput";
 
 const EditUserSchema = Yup.object().shape({
   current_password: Yup.string().required("Enter your current password."),
@@ -12,7 +12,7 @@ const EditUserSchema = Yup.object().shape({
 });
 
 const EditUserPasswordForm = function () {
-  const { updateUserPassword, setSuccessMessage, setErrorMessage } = useAppContext();
+  const { updateUserPassword, setErrorMessage, setSuccessMessage } = useAppContext();
 
   const initialValues = {
     current_password: "",
@@ -22,11 +22,12 @@ const EditUserPasswordForm = function () {
   const submitEditUserPasswordHandler = async (values) => {
     const { new_password, current_password } = values;
     try {
-      const userToken = await updateUserPassword({ new_password, current_password });
-      if (userToken) {
-        setSuccessMessage("You have successfully edited your account");
+      const response = await updateUserPassword({ new_password, current_password });
+      const { status, message } = response;
+      if (status) {
+        setSuccessMessage(message);
       } else {
-        setErrorMessage("Something went wrong. Check data");
+        setErrorMessage(message || "Something went wrong. Check login data");
       }
     } catch (error) {
       setErrorMessage("Something went wrong. Check data");
@@ -42,22 +43,8 @@ const EditUserPasswordForm = function () {
     >
       {({ errors, touched }) => (
         <Form className="edit-user__form">
-          <label className="_input__label" htmlFor="current_password">
-            Current Password
-          </label>
-          <Field
-            className={`_input _input--small-height ${errors.current_password && touched.current_password ? "_input__error" : ""}`}
-            name="current_password"
-          />
-          <ErrorMessage error={errors.current_password} touched={touched.current_password} />
-          <label className="_input__label" htmlFor="new_password">
-            New Password
-          </label>
-          <Field
-            className={`_input _input--small-height ${errors.new_password && touched.new_password ? "_input__error" : ""}`}
-            name="new_password"
-          />
-          <ErrorMessage error={errors.new_password} touched={touched.new_password} />
+          <TextInput className="_input _input--small-height" label="Current Password" name="current_password" />
+          <TextInput className="_input _input--small-height" label="New Password" name="new_password" />
 
           <button className="_button" type="submit">
             Submit
