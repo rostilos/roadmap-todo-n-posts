@@ -2,6 +2,12 @@
 
 The application is containerized, .sh scripts are used to use and run docker containers.
 
+## Used stack
+Frontend : react
+Backend : php
+DB : mysql
+Web Server : nginx
+
 ## Running the project : 
 
 First you need to set read and execute permissions to .sh scripts : 
