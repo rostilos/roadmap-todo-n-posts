@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
     tty: true
@@ -45,6 +44,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     networks:
       - app-network
+    volumes:
+      - ./db-dump:/docker-entrypoint-initdb.d
 
 #Docker Networks
 networks:
