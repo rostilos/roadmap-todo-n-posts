@@ -1,0 +1,1 @@
+export const UPDATE_POSTS_LIST = "UPDATE_POSTS_LIST";

@@ -1,0 +1,23 @@
+.user-card{
+    margin-top: 16px;
+    &__body{
+        display: flex;
+        justify-content: flex-start;
+    }
+    &__image{
+        width: 60px;
+        height: 60px;
+        margin-right: 16px;
+        border-radius: 50%;
+    }
+    &__fullname{
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    &__birth-date{
+        color: $grey-600;
+        margin-top: 4px;
+        font-style: italic;
+    }
+}

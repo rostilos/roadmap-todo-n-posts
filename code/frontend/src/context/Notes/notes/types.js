@@ -1,0 +1,1 @@
+export const UPDATE_NOTES_LIST = "UPDATE_NOTES_LIST";
