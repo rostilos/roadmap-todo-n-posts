@@ -1,4 +1,19 @@
 import React from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import TextArea from "../../../Common/Form/TextArea";
+import TextInput from "../../../Common/Form/TextInput";
+
+const NoteSchema = Yup.object().shape({
+  title: Yup.string().required("No title provided."),
+  content: Yup.string().required("No content provided."),
+});
+
+const initialValues = {
+  title: "",
+  content: "",
+  priority: String(0),
+};
 
 const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm, showNewNoteForm }) {
   return (
@@ -6,32 +21,35 @@ const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm, showNew
       <div className="_form-popup__overlay" onClick={() => setShowNewNoteForm(false)}></div>
       <div className={`_form-popup__body _section ${showNewNoteForm ? "active" : ""}`}>
         <h1 className="page__title">Add new note</h1>
-        <form onSubmit={submitCreateNoteForm} className="_form-popup__form">
-          <p>Title</p>
-          <input className="_input" name="title" type="text" />
-
-          <p>Content</p>
-          <textarea className="_textarea" name="content" style={{ resize: "none" }} />
-
-          <p>Priority</p>
-          <div className="_form-popup__priority">
-            <div>
-              <input type="radio" className="_radio" id="low" name="priority" value="0" />
-              <label for="low">Low</label>
-            </div>
-            <div>
-              <input type="radio" className="_radio" id="medium" name="priority" value="1" />
-              <label for="medium">Medium</label>
-            </div>
-            <div>
-              <input type="radio" className="_radio" id="high" name="priority" value="2" />
-              <label for="high">High</label>
-            </div>
-          </div>
-          <button className="_button" type="submit">
-            Submit
-          </button>
-        </form>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={NoteSchema}
+          onSubmit={(values) => submitCreateNoteForm(values)}
+        >
+          {({ errors, touched }) => (
+            <Form className="_form-popup__form">
+              <TextInput label="title" name="title" />
+              <TextArea label="Content" name="content" rows="6" />
+              <div className="_form-popup__priority">
+                <div>
+                  <Field type="radio" id="low" name="priority" defaultChecked="true" className="_radio" value="0" />
+                  <label for="low">Low</label>
+                </div>
+                <div>
+                  <Field type="radio" id="medium" name="priority" className="_radio" value="1" />
+                  <label for="medium">Medium</label>
+                </div>
+                <div>
+                  <Field type="radio" id="high" name="priority" className="_radio" value="2" />
+                  <label for="high">High</label>
+                </div>
+              </div>
+              <button className="_button" type="submit">
+                Create
+              </button>
+            </Form>
+          )}
+        </Formik>
         <button type="button" className="_form-popup__close" onClick={() => setShowNewNoteForm(false)}>
           x
         </button>

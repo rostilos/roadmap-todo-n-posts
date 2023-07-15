@@ -37,16 +37,9 @@ const Notes = function () {
             });
           }, {});
 
-  const submitCreateNoteForm = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const noteData = {
-      title: formData.get("title"),
-      content: formData.get("content"),
-      priority: formData.get("priority"),
-    };
+  const submitCreateNoteForm = async (values) => {
     try {
-      const status = await createNote(noteData);
+      const status = await createNote(values);
       if (status) {
         setShowNewNoteForm(false);
         setSuccessMessage("You have successfully added a new note");
