@@ -36,7 +36,7 @@ RUN set -eux; \
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
-COPY . /var/www/html
+COPY ./code /var/www/html
 
 COPY --chown=www:www . /var/www
 

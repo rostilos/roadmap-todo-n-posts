@@ -3,10 +3,10 @@ FROM node:14 as frontend
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY ./code/package.json package-lock.json ./
 RUN npm ci --silent
-COPY public ./public
-COPY src ./src
+COPY ./code/public ./public
+COPY ./code/src ./src
 RUN npm run build
 
 # Stage 2: Установка зависимостей PHP и Nginx
