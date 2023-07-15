@@ -7,6 +7,9 @@ import EditNote from "../../components/Notes/components/Form/EditNote";
 import NoteTabs from "../../components/Notes/components/NoteTabs";
 import useAppContext from "../../hook/useAppContext";
 
+import plus from "../../assets/images/common/plus.svg";
+import deleteicon from "../../assets/images/common/deleteicon.svg";
+
 const notePriorityIds = {
   2: "Important",
   1: "Medium priority",
@@ -19,32 +22,32 @@ const Notes = function () {
   const [editNoteData, setEditNoteData] = useState(null);
   const [activeTabId, setActiveTabId] = useState(0);
 
-  const { createNote, fetchNotes, userNotes, editNote, deleteNote } = useNotesContext();
+  const { createNote, fetchNotes, userNotes, editNote, deleteNote, deleteNotesGroup } = useNotesContext();
   const { setSuccessMessage, setErrorMessage } = useAppContext();
 
   useEffect(() => {
     fetchNotes();
   }, [fetchNotes]);
 
-  const filteredNotes =
-    activeTabId === 3
-      ? userNotes
-      : Object.keys(userNotes)
-          .filter((key) => userNotes[key].priority === activeTabId)
-          .reduce((obj, key) => {
-            return Object.assign(obj, {
-              [key]: userNotes[key],
-            });
-          }, {});
+  const filterByPriority = () => {
+    return Object.keys(userNotes)
+      .filter((key) => userNotes[key].priority === activeTabId)
+      .reduce((obj, key) => {
+        return Object.assign(obj, {
+          [key]: userNotes[key],
+        });
+      }, {});
+  };
 
   const submitCreateNoteForm = async (values) => {
     try {
-      const status = await createNote(values);
+      const response = await createNote(values);
+      const { status, message } = response;
       if (status) {
         setShowNewNoteForm(false);
-        setSuccessMessage("You have successfully added a new note");
+        setSuccessMessage(message);
       } else {
-        setErrorMessage("Something went wrong");
+        setErrorMessage(message ?? "Something went wrong");
       }
     } catch (error) {
       setErrorMessage("Something went wrong");
@@ -52,41 +55,36 @@ const Notes = function () {
     }
   };
 
-  const submitEditNoteForm = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const noteData = {
-      id: formData.get("id"),
-      title: formData.get("title"),
-      content: formData.get("content"),
-      priority: formData.get("priority"),
-    };
+  const submitEditNoteForm = async (values) => {
     try {
-      const status = await editNote(noteData);
+      const response = await editNote(values);
+      const { status, message } = response;
       if (status) {
         setEditNoteData(null);
-        // setSuccessMessage("You have successfully registered your account");
-        // navigate("/");
+        setSuccessMessage(message);
       } else {
-        // setErrorMessage("Something went wrong. Check data");
+        setErrorMessage(message ?? "Something went wrong");
       }
     } catch (error) {
-      // setErrorMessage("Something went wrong. Check data");
+      setErrorMessage("Something went wrong");
       console.error(error);
     }
   };
 
   const deleteNoteRequest = async (id) => {
     try {
-      const status = await deleteNote({ id: id });
-      if (status) {
-        // setSuccessMessage("You have successfully registered your account");
-        // navigate("/");
-      } else {
-        // setErrorMessage("Something went wrong. Check data");
-      }
+      await deleteNote({ id: id });
     } catch (error) {
-      // setErrorMessage("Something went wrong. Check data");
+      setErrorMessage("Something went wrong.");
+      console.error(error);
+    }
+  };
+
+  const deleteNotesGroupRequest = async (priority) => {
+    try {
+      await deleteNotesGroup({ priority });
+    } catch (error) {
+      setErrorMessage("Something went wrong.");
       console.error(error);
     }
   };
@@ -94,6 +92,8 @@ const Notes = function () {
   const handleFilterChange = (id) => {
     setActiveTabId(id);
   };
+
+  const filteredNotes = activeTabId === 3 ? userNotes : filterByPriority();
 
   return (
     <div className="notes-page">
@@ -105,10 +105,26 @@ const Notes = function () {
           <p className="notes-page__note-count">
             {notePriorityIds[activeTabId]} Notes ({Object.keys(filteredNotes).length})
           </p>
-          <div className="notes-page__button-new">
-            <button className="_button" type="button" onClick={() => setShowNewNoteForm(!showNewNoteForm)}>
-              Add new
+          <div className="notes-page__actions">
+            <button
+              className="notes-page__button-new"
+              type="button"
+              title="Create new note"
+              onClick={() => setShowNewNoteForm(!showNewNoteForm)}
+            >
+              <img src={plus} alt="" />
             </button>
+
+            {activeTabId !== 3 && !isEmpty(filteredNotes) && (
+              <button
+                className="notes-page__button-delete"
+                type="button"
+                title="Delete all notes from current group"
+                onClick={() => deleteNotesGroupRequest(activeTabId)}
+              >
+                <img src={deleteicon} alt="" />
+              </button>
+            )}
           </div>
         </div>
 

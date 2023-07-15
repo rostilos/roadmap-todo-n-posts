@@ -1,10 +1,17 @@
-import { fetchNotesAction, createNoteAction, editNoteAction, deleteNoteAction } from "./notes/actions";
+import {
+  fetchNotesAction,
+  createNoteAction,
+  editNoteAction,
+  deleteNoteAction,
+  deleteNotesGroupAction,
+} from "./notes/actions";
 
 const dispatchMapper = {
   fetchNotes: fetchNotesAction,
   createNote: createNoteAction,
   editNote: editNoteAction,
   deleteNote: deleteNoteAction,
+  deleteNotesGroup: deleteNotesGroupAction,
 };
 
 export default function notesDispatcher(dispatch) {

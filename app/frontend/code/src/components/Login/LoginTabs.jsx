@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import useAppContext from "../../hook/useAppContext";
 
 const LoginTabs = function ({ changeHandler, activeTab }) {
   return (

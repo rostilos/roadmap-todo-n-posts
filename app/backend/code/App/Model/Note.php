@@ -1,16 +1,19 @@
-<?php 
+<?php
 namespace App\Model;
 
 use Core\Model;
 
 class Note extends Model
 {
-    public function __construct() {
-        parent::__construct("user_notes");
+    public function __construct()
+    {
+        parent::__construct('user_notes');
     }
 
     /**
      * Method getting all user notes for current user from database.
+     *
+     * @param int $userId
      *
      * @return array
      * @access  public
@@ -19,8 +22,11 @@ class Note extends Model
     public function getUserNotes($userId)
     {
         $rows = $this->DB()
-                        ->query('SELECT DISTINCT * FROM `user_notes` WHERE `user_id`= ' . "$userId")
-                        ->fetchAll(\PDO::FETCH_ASSOC);
+            ->query(
+                'SELECT DISTINCT * FROM `user_notes` WHERE `user_id`= ' .
+                    "$userId"
+            )
+            ->fetchAll(\PDO::FETCH_ASSOC);
 
         // Insert data from database
         $userNotes = [];
@@ -40,6 +46,8 @@ class Note extends Model
     /**
      * Method create new user note.
      *
+     * @param array $noteData contains all the date on the note
+     *
      * @return int
      * @access  public
      */
@@ -51,7 +59,9 @@ class Note extends Model
     }
 
     /**
-     * Method edit existed user note.
+     * Method delete existed user note.
+     *
+     * @param int $noteId
      *
      * @return void
      * @access  public
@@ -59,14 +69,39 @@ class Note extends Model
     public function delete($noteId)
     {
         $this->DB()
-                ->query('DELETE FROM `user_notes` WHERE `id`= ' . "$noteId")
-                ->fetchAll(\PDO::FETCH_ASSOC);
+            ->query('DELETE FROM `user_notes` WHERE `id`= ' . "$noteId")
+            ->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Method delete all existed user notes with selected priority
+     *
+     * @param int $userId
+     * @param int $priority
+     *
+     * @return void
+     * @access  public
+     */
+    public function deleteNotesByGroup($userId, $priority)
+    {
+        $query =
+            'DELETE FROM `user_notes` ' .
+            'WHERE `user_id`= ' .
+            "$userId " .
+            'AND `priority`=' .
+            "$priority";
+        $this->DB()
+            ->query($query)
+            ->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
      * Method edit existed user note.
      *
-     * @return array
+     * @param array $noteData
+     * @param int $userId
+     *
+     * @return void
      * @access  public
      */
     public function update($noteData, $userId)
@@ -75,18 +110,23 @@ class Note extends Model
             'id' => $id,
             'title' => $title,
             'content' => $content,
-            'priority' => $priority
+            'priority' => $priority,
         ] = $noteData;
 
-        $query = 'UPDATE `user_notes` SET '
-                . '`title`=' . "'$title',"
-                . '`content`=' . "'$content',"
-                . '`priority`=' . "$priority "
-                . 'WHERE `user_id`=' . "$userId "
-                . 'AND `id`=' . "$id";
-        $rows = $this->DB()
-                        ->query($query)
-                        ->fetchAll(\PDO::FETCH_ASSOC);
-        return $this->DB()->lastInsertId();
+        $query =
+            'UPDATE `user_notes` SET ' .
+            '`title`=' .
+            "'$title'," .
+            '`content`=' .
+            "'$content'," .
+            '`priority`=' .
+            "$priority " .
+            'WHERE `user_id`=' .
+            "$userId " .
+            'AND `id`=' .
+            "$id";
+        $this->DB()
+            ->query($query)
+            ->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

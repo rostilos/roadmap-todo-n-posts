@@ -28,5 +28,8 @@
     ._button{
       align-self: flex-end;
     }
+    button[type="submit"]{
+      margin-top: 20px;
+    }
   }
 }

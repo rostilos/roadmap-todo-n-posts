@@ -1,3 +1,3 @@
 export const config = {
-  baseUrl: 'http://localhost/',
+  baseUrl: 'http://dev.roadmap.com/',
 };

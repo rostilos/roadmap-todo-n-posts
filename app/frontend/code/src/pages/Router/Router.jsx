@@ -8,7 +8,7 @@ const Router = () => {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    if (!isLoggedIn && location?.pathname !== "/posts") {
+    if (!isLoggedIn && location?.pathname !== "/posts" && !location?.pathname.includes("post")) {
       navigate("/login");
     } else if (!customerData?.email) {
       setCustomerDataFromToken();

@@ -24,20 +24,28 @@ class PostsController extends Controller
      */
     private $validator;
 
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->jwt = new Jwt();
         $this->postModel = new Post();
         $this->validator = new Validator();
     }
 
-    public function create()
+    /**
+     * Create post
+     *
+     * @return array
+     * @access  public
+     */
+    public function createPost()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
 
-        if(!$is_jwt_valid){
-            return false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
         }
 
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
@@ -50,44 +58,92 @@ class PostsController extends Controller
             'content' => $requestData['content'],
             'created_at' => date('Y-m-d H:i:s'),
         ];
-        // TODO: refactoring
-        if($this->validator->isContainsEmptyValues($newPost)){
-            return false;
+
+        if ($this->validator->isContainsEmptyValues($newPost)) {
+            $this->return_json(null, 'Check that the data is correct', false);
         }
-        $postId = $this->postModel->create($newPost);
-        $this->return_json($postId);
+        if ($postId = $this->postModel->create($newPost)) {
+            $this->return_json(
+                null,
+                'The new post has been successfully posted',
+                true
+            );
+        }
+        $this->return_json(null, 'Something went wrong', false);
     }
 
-
-    public function getAllPostsData()
+    /**
+     * Get posts collection ( Pagination is used )
+     *
+     * @return array
+     * @access  public
+     */
+    // TODO : refactoring this method 
+    public function getPosts()
     {
         $requestData = $this->getPostData();
         $page = 1;
         $limit = 5;
         $sortOrder = 'DESC';
-        
-        if(isset($requestData['page'])){
+        $currentUserOnly = false;
+        $userId = null;
+
+        if (isset($requestData['page'])) {
             $page = $requestData['page'];
         }
-        if(isset($requestData['limit'])){
+        if (isset($requestData['limit'])) {
             $limit = $requestData['limit'];
         }
-        if(isset($requestData['sort'])){
+        if (isset($requestData['sort'])) {
             $sortOrder = $requestData['sort'];
         }
-        $offset = ($page-1) * $limit;
-        
-        $posts = $this->postModel->getAll($page,$offset,$limit,$sortOrder);
-        $this->return_json($posts);
+        if (isset($requestData['userPostsOnly'])) {
+            $currentUserOnly = $requestData['userPostsOnly'];
+        }
+
+        if($currentUserOnly){
+            $bearer_token = $this->jwt->get_bearer_token();
+            $is_jwt_valid = isset($bearer_token)
+                ? $this->jwt->is_jwt_valid($bearer_token)
+                : false;
+
+            if (!$is_jwt_valid) {
+                $this->return_json(null, 'Invalid token provided', false);
+            }
+            $userId = $this->jwt->getPayload($bearer_token)->user->id;
+        }
+        $offset = ($page - 1) * $limit;
+
+        if (
+            !($posts = $this->postModel->getPostsCollection(
+                $page,
+                $offset,
+                $limit,
+                $sortOrder,
+                $currentUserOnly,
+                $userId
+            ))
+        ) {
+            $this->return_json(null, null, false);
+        }
+        $this->return_json($posts, null, true);
     }
 
+    /**
+     * Get posts by post id
+     *
+     * @return array
+     * @access  public
+     */
     public function getPostById()
     {
         $requestData = $this->getPostData();
         $postIdFromRequest = $requestData['id'];
-        $postData = $this->postModel->getPostById($postIdFromRequest);
 
-        $this->return_json(['data' => $postData]);
+        if ($postData = $this->postModel->getPostById($postIdFromRequest)) {
+            $this->return_json(['data' => $postData], null, true);
+        }
 
+        $this->return_json(null, 'Something went wrong', false);
     }
 }

@@ -13,10 +13,26 @@ const options = [
   { value: "ASC", label: "From old To new" },
 ];
 
+const reactSelectStyles = {
+  control: (baseStyles, state) => ({
+    ...baseStyles,
+    borderColor: state.isFocused ? "" : "#115173",
+    borderRadius: "14px",
+  }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isSelected ? "rgba(17, 81, 115, 0.2)" : isFocused ? "rgba(17, 81, 115, 0.1)" : "#fff",
+      color: "#000",
+      cursor: isDisabled ? "not-allowed" : "pointer",
+    };
+  },
+};
+
 const Posts = function () {
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
   const [selectedSortOption, setSelectedSortOption] = useState({ value: "DESC", label: "From new To old" });
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { setSuccessMessage, setErrorMessage, isLoggedIn } = useAppContext();
   const { createPost, fetchPosts, posts } = usePostsContext();
@@ -35,13 +51,13 @@ const Posts = function () {
 
   const submitCreatePostForm = async (values) => {
     try {
-      const status = await createPost(values);
+      const response = await createPost(values);
+      const { status, message } = response;
       if (status) {
         setShowCreatePostForm(false);
-        setSuccessMessage("You have successfully added a new note");
-        // navigate("/");
+        setSuccessMessage(message);
       } else {
-        setErrorMessage("Something went wrong");
+        setErrorMessage(message ?? "Something went wrong");
       }
     } catch (error) {
       setErrorMessage("Something went wrong");
@@ -52,27 +68,48 @@ const Posts = function () {
   const handleSelectChange = (selectedOption) => {
     setSelectedSortOption(selectedOption);
     const query = paramsToObject(searchParams);
+    console.log(query);
     fetchPostsList({ ...query, sort: selectedOption?.value });
+  };
+
+  const handleFilterForUserChange = (e) => {
+    const filterByUser = e.target.checked;
+    const searchParamsAfterFilterChanges = { page: 1, limit: 5, userPostsOnly: filterByUser ? 1 : 0 };
+    setSearchParams(searchParamsAfterFilterChanges);
+    fetchPostsList(searchParamsAfterFilterChanges);
   };
 
   return (
     <div className="page__posts posts-list ">
       <div className="_section">
-        <div className="notes-page__header" style={{ margin: 0 }}>
+        <div className="posts-list__header" style={{ margin: 0 }}>
           <h1 className="page__title">User Posts</h1>
           {isLoggedIn && (
-            <div className="notes-page__button-new">
-              <button className="_button" type="button" onClick={() => setShowCreatePostForm(!showCreatePostForm)}>
-                Add new
-              </button>
-            </div>
+            <button className="_button posts-list__add-new" type="button" onClick={() => setShowCreatePostForm(!showCreatePostForm)}>
+              Add new
+            </button>
           )}
         </div>
       </div>
 
       <div className="posts-list__sort-toolbar posts-sort-toolbar">
+        <div className="posts-sort-toolbar__checkbox _checkbox-wrapper">
+          <input
+            type="checkbox"
+            className="_checkbox"
+            name="filter_by_user"
+            id="filter_by_user"
+            onChange={handleFilterForUserChange}
+          />
+          <label htmlFor="filter_by_user">Show only my posts</label>
+        </div>
         <div className="posts-sort-toolbar__select">
-          <Select value={selectedSortOption} onChange={handleSelectChange} options={options} />
+          <Select
+            styles={reactSelectStyles}
+            value={selectedSortOption}
+            onChange={handleSelectChange}
+            options={options}
+          />
         </div>
       </div>
       {showCreatePostForm && (
@@ -84,11 +121,18 @@ const Posts = function () {
       )}
       {data && <PostList posts={data} />}
 
-      <Toolbar
-        callbackNext={() => fetchPostsList({ page: pagination?.nextPage, limit: pagination?.limit })}
-        callbackPrev={() => fetchPostsList({ page: pagination?.prevPage, limit: pagination?.limit })}
-        pagination={pagination}
-      />
+      {data && (
+        <Toolbar
+          callbackNext={() => fetchPostsList({ page: pagination?.nextPage, limit: pagination?.limit })}
+          callbackPrev={() => fetchPostsList({ page: pagination?.prevPage, limit: pagination?.limit })}
+          pagination={pagination}
+        />
+      )}
+      {!data && (
+        <div className="_section">
+          <p>No posts were found for this query</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -36,7 +36,7 @@ abstract class Model {
         $this->_table = $table_name;
     }
 
-    public function insert(array $data): int {
+    public function insert(array $data): mixed {
 
         if($this->_table === ""){
             throw new Exception("Attribute _table is empty string!");
@@ -56,8 +56,11 @@ abstract class Model {
         ");
 
         // Execute statement with values
-        $stmt->execute($values);
-
+        try{
+            $stmt->execute($values);
+        }catch (\PDOException $e) {
+            return false; 
+        }
         // Return last inserted ID.
         return $this->DB()->lastInsertId();
     }

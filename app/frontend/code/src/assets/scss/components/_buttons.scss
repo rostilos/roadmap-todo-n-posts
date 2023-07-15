@@ -1,21 +1,33 @@
-._button{
-    text-align: center;
-    text-decoration: none;
-    color: initial;
-    padding: 10px;
-    background: #fff;
-    border-radius: $border-md;
-    border: 1px solid $blue-semilight;
-    min-width: 140px;
-    height: 40px;
-    cursor: pointer;
-    transition: $animation;
-    &:hover{
-        background-color: $blue-medium;
-        border: #fff;
-        color: #fff;
-    }
-    &:active{
-        transform: scale(0.95);
-    }
+._button {
+  text-align: center;
+  text-decoration: none;
+  color: initial;
+  padding: 10px;
+  background: #fff;
+  border-radius: $border-md;
+  border: 1px solid $blue-semilight;
+  min-width: 140px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: $animation;
+  @media screen and (max-width: $screen-xl) {
+    height: 32px;
+  }
+  @media screen and (max-width: $screen-md) {
+    height: 30px;
+  }
+  &:hover {
+    background-color: $blue-medium;
+    border: #fff;
+    color: #fff;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+  &:focus {
+    border: 2px solid $blue-dark;
+  }
 }

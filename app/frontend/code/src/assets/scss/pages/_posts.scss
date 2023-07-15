@@ -1,3 +1,15 @@
+.posts-list {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__add-new {
+    @media screen and (max-width: $screen-xsm) {
+      min-width: 100px !important;
+    }
+  }
+}
 .post-preview {
   &__body {
     overflow: hidden;
@@ -45,7 +57,8 @@
 }
 .posts-sort-toolbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 25px;
   @media screen and (max-width: $screen-2xl) {
     margin-top: 20px;
@@ -56,9 +69,20 @@
   @media screen and (max-width: $screen-md) {
     margin-top: 12px;
   }
-  &__select {
-    @media screen and (max-width: $screen-sm) {
-      max-width: 50%;
+  @media screen and (max-width: $screen-xsm) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    &__checkbox {
+      margin-top: 16px;
+      label {
+        font-size: 14px;
+        font-weight: 400;
+      }
     }
+  }
+  &__select {
+    // @media screen and (max-width: $screen-sm) {
+    //   max-width: 50%;
+    // }
   }
 }

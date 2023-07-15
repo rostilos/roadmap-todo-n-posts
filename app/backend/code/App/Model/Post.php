@@ -1,12 +1,13 @@
-<?php 
+<?php
 namespace App\Model;
 
 use Core\Model;
 
 class Post extends Model
 {
-    public function __construct() {
-        parent::__construct("posts");
+    public function __construct()
+    {
+        parent::__construct('posts');
     }
 
     /**
@@ -18,33 +19,55 @@ class Post extends Model
 
     public function create($newPost)
     {
-        $row = $this->insert($newPost);
-        return $row;
+        $newPostId = $this->insert($newPost);
+        return $newPostId;
     }
 
-     /**
+    /**
      * Method getting all posts
+     *
+     * @param int $page Current page ( configuration for pagination )
+     * @param int $offset Offset from zero index
+     * @param int $limit  Limit on the number of outputs per page
+     * @param string $sortOrder DESC/ASC
+     * @param bool $currentUserOnly Parameter to filter posts for the current user only
+     * @param null|int $userId
      *
      * @return array
      * @access  public
      */
 
-    public function getAll($page,$offset, $limit, $sortOrder)
-    {
-        $query =
-            'SELECT DISTINCT * ' .
-            'FROM `posts` ';
+    //  TODO : refactoring this method ...
+    public function getPostsCollection(
+        $page,
+        $offset,
+        $limit,
+        $sortOrder,
+        $currentUserOnly = false,
+        $userId = null
+    ) {
+        $filterQueryPart = $currentUserOnly
+            ? 'WHERE user_id=' . "$userId "
+            : '';
+
+        $query = 'SELECT DISTINCT * ' . 'FROM `posts` ' . $filterQueryPart;
         $totalRows = $this->DB()
             ->query($query)
             ->rowCount();
         $totalPages = ceil($totalRows / $limit);
 
+        $filterQueryPart = $currentUserOnly
+            ? 'WHERE posts.user_id=' . "$userId "
+            : '';
+
         $query =
-            'SELECT DISTINCT posts.id, posts.title, posts.content, posts.created_at, users.firstname, users.lastname ' .
+            'SELECT DISTINCT posts.id, posts.user_id, posts.title, posts.content, posts.created_at, users.firstname, users.lastname ' .
             'FROM `posts` ' .
             'LEFT JOIN `users` ' .
-            'ON posts.user_id=users.id ' . 
-            'ORDER by posts.created_at ' . "$sortOrder " .
+            'ON posts.user_id=users.id ' .
+            $filterQueryPart .
+            'ORDER by posts.created_at ' .
+            "$sortOrder " .
             'LIMIT ' .
             $offset .
             ',' .
@@ -54,12 +77,12 @@ class Post extends Model
             ->query($query)
             ->fetchAll(\PDO::FETCH_ASSOC);
 
-        $users = [
+        $posts = [
             'data' => [],
             'pagination' => [],
         ];
         foreach ($rows as $row) {
-            array_push($users['data'], [
+            array_push($posts['data'], [
                 'id' => $row['id'],
                 'firstname' => $row['firstname'],
                 'lastname' => $row['lastname'],
@@ -68,17 +91,19 @@ class Post extends Model
                 'created_at' => $row['created_at'],
             ]);
         }
-        $users['pagination'] = [
+        $posts['pagination'] = [
             'total' => $totalPages,
             'page' => $page,
             'limit' => $limit,
         ];
 
-        return $users;
+        return $posts;
     }
 
     /**
      * Method getting post by id
+     *
+     * @param int $id
      *
      * @return array
      * @access  public
@@ -89,17 +114,19 @@ class Post extends Model
         $query =
             'SELECT DISTINCT posts.id, posts.title, posts.content, posts.created_at, users.firstname, users.lastname ' .
             'FROM `posts` ' .
-            'LEFT JOIN `users` '.
-            'ON posts.user_id=users.id '. 
-            'WHERE ' . 'posts.id=' . "'$id' ";
-            $row = $this->DB()
-                        ->query($query)
-                        ->fetchAll(\PDO::FETCH_ASSOC);
+            'LEFT JOIN `users` ' .
+            'ON posts.user_id=users.id ' .
+            'WHERE ' .
+            'posts.id=' .
+            "'$id' ";
+        $row = $this->DB()
+            ->query($query)
+            ->fetchAll(\PDO::FETCH_ASSOC);
 
         if ($row) {
             $post = $row[0];
             return $post;
         }
-        return false;
+        return [];
     }
 }

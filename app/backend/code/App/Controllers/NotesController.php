@@ -5,6 +5,7 @@ use Core\Request;
 use Core\Controller;
 use App\Model\Note;
 use Core\Jwt;
+use Core\Validator;
 
 class NotesController extends Controller
 {
@@ -18,27 +19,57 @@ class NotesController extends Controller
      */
     private $userNote;
 
-    public function __construct() {
+    /**
+     * @var Validator
+     */
+    private $validator;
+
+    public function __construct()
+    {
         $this->jwt = new Jwt();
         $this->noteModel = new Note();
+        $this->validator = new Validator();
     }
 
-    public function user_notes()
+    /**
+     * Get all user notes
+     *
+     * @return array
+     * @access  public
+     */
+    public function getUserNotes()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
-        $userId = $this->jwt->getPayload($bearer_token)->user->id;
-        if (!$userId) {
-            return false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
+
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
         }
+        $userId = $this->jwt->getPayload($bearer_token)->user->id;
         $userNotes = $this->noteModel->getUserNotes($userId);
-        $this->return_json($userNotes);
+
+        $this->return_json(['data' => $userNotes], null, true);
     }
 
-    public function create()
+    /**
+     * Create new user note
+     *
+     * @return array
+     * @access  public
+     */
+    public function createNote()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
+
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
+        }
+
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
 
         $requestData = $this->getPostData();
@@ -49,21 +80,31 @@ class NotesController extends Controller
             'priority' => $requestData['priority'],
             'created_at' => date('Y-m-d H:i:s'),
         ];
-        // TODO: refactoring
-        if($containsEmpty = in_array("", $noteData)){
-            return false;
+
+        if ($this->validator->isContainsEmptyValues($noteData)) {
+            $this->return_json(null, 'Check that the data is correct', false);
         }
-        $noteId = $this->noteModel->create($noteData);
-        $this->return_json($noteId);
+        if ($this->noteModel->create($noteData)) {
+            $this->return_json(null, 'Note successfully added', true);
+        }
+        $this->return_json(null, 'Something went wrong', false);
     }
 
-    public function update()
+    /**
+     * Update existing user note
+     *
+     * @return array
+     * @access  public
+     */
+    public function updateNote()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
 
-        if(!$is_jwt_valid){
-            return false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
         }
 
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
@@ -72,25 +113,70 @@ class NotesController extends Controller
             'id' => $requestData['id'],
             'title' => $requestData['title'],
             'content' => $requestData['content'],
-            'priority' => $requestData['priority']
+            'priority' => $requestData['priority'],
         ];
-        // TODO: refactoring
-        if($containsEmpty = in_array("", $noteData)){
-            return false;
+
+        if ($this->validator->isContainsEmptyValues($noteData)) {
+            $this->return_json(
+                null,
+                'Check that your e-mail and password are correct',
+                false
+            );
         }
-        $noteId = $this->noteModel->update($noteData, $userId);
-        $this->return_json($noteId);
+
+        $this->noteModel->update($noteData, $userId);
+        $this->return_json(null, 'The note has been successfully edited', true);
     }
 
-    public function delete()
+    /**
+     * Delete existing user note
+     *
+     * @return array
+     * @access  public
+     */
+    public function deleteNote()
     {
         $bearer_token = $this->jwt->get_bearer_token();
-        $is_jwt_valid = isset($bearer_token) ? $this->jwt->is_jwt_valid($bearer_token) : false;
-        if(!$is_jwt_valid){
-            return false;
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
+        }
+
+        $requestData = $this->getPostData();
+        $this->noteModel->delete($requestData['id']);
+        $this->return_json(
+            null,
+            'The note has been successfully deleted',
+            true
+        );
+    }
+
+    /**
+     * Method delete all existed user notes with selected priority
+     *
+     *
+     * @return array
+     * @access  public
+     */
+    public function deleteNotesByGroup()
+    {
+        $bearer_token = $this->jwt->get_bearer_token();
+        $is_jwt_valid = isset($bearer_token)
+            ? $this->jwt->is_jwt_valid($bearer_token)
+            : false;
+        if (!$is_jwt_valid) {
+            $this->return_json(null, 'Invalid token provided', false);
         }
         $userId = $this->jwt->getPayload($bearer_token)->user->id;
         $requestData = $this->getPostData();
-        $this->noteModel->delete($requestData['id'], $userId);
+
+        $this->noteModel->deleteNotesByGroup($userId, $requestData['priority']);
+        $this->return_json(
+            null,
+            'The notes has been successfully deleted',
+            true
+        );
     }
 }
