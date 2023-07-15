@@ -5,8 +5,8 @@ The application is containerized, .sh scripts are used to use and run docker con
 ## Used stack
 Frontend : React \
 Backend : php \
-DB : MySQL \ 
-Web Server : Nginx \
+DB : MySQL \
+Web Server : Nginx
 
 ## Running the project : 
 
