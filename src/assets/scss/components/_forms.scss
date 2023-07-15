@@ -10,6 +10,12 @@
   min-width: 200px;
   height: 44px;
   margin-bottom: 16px;
+  @media screen and (max-width: $screen-xl) {
+    height: 38px;
+  }
+  @media screen and (max-width: $screen-md) {
+    height: 32px;
+  }
   &__error {
     border: 1px solid $common-red;
   }

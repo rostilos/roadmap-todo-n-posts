@@ -66,7 +66,7 @@ const RegisterForm = function ({ submitRegisterHandler }) {
             <ErrorMessage error={errors.email} touched={touched.email} />
 
             <button className="_button" type="submit">
-              Login
+              Register
             </button>
           </Form>
         )}
