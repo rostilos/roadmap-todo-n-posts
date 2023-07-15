@@ -26,7 +26,7 @@ const CreatePost = function ({ submitCreatePostForm, setShowCreatePostForm, show
         >
           {({ errors, touched }) => (
             <Form className="_form-popup__form">
-              <TextInput label="title" name="title" />
+              <TextInput label="Title" name="title" />
               <TextArea label="Content" name="content" rows="6" />
 
               <button className="_button" type="submit">

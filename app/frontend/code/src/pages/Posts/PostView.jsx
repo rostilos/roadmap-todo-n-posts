@@ -32,11 +32,9 @@ const PostView = function () {
         <div className="notes-page__header" style={{ margin: 0 }}>
           <h1 className="page__title">Article View</h1>
 
-          <div className="notes-page__button-new">
-            <Link className="_button" to="/posts">
-              Back
-            </Link>
-          </div>
+          <Link className="_button" to="/posts">
+            Back
+          </Link>
         </div>
       </div>
       <div className="post-view__body _section">

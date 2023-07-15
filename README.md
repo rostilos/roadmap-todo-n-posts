@@ -30,5 +30,8 @@ Access to the backend portion of the container :
 Access to mysql :
 ### `./mysql-bash.sh`
 
+Rebuild app :
+### `./rebuild-and-run-app.sh`
+
 
 
