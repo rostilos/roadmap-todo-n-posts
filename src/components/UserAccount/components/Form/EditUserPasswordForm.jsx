@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import useAppContext from "../../../../hook/useAppContext";
-import TextInput from "../../../Common/Form/TextInput";
+import PasswordInput from "../../../Common/Form/PasswordInput";
 
 const EditUserSchema = Yup.object().shape({
   current_password: Yup.string().required("Enter your current password."),
@@ -43,8 +43,8 @@ const EditUserPasswordForm = function () {
     >
       {({ errors, touched }) => (
         <Form className="edit-user__form">
-          <TextInput className="_input _input--small-height" label="Current Password" name="current_password" />
-          <TextInput className="_input _input--small-height" label="New Password" name="new_password" />
+          <PasswordInput className="_input _input--small-height" label="Current Password" name="current_password" />
+          <PasswordInput className="_input _input--small-height" label="New Password" name="new_password" />
 
           <button className="_button" type="submit">
             Submit

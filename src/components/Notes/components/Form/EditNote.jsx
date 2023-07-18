@@ -51,9 +51,7 @@ const EditNote = function ({ editNoteData, setEditNoteData, submitEditNoteForm }
           )}
         </Formik>
 
-        <button type="button" className="_form-popup__close" onClick={() => setEditNoteData(null)}>
-          x
-        </button>
+        <button type="button" className="_form-popup__close" onClick={() => setEditNoteData(null)}></button>
       </div>
     </div>
   );

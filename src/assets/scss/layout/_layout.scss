@@ -4,6 +4,9 @@ body {
 .page {
   &__content {
   }
+  &__main {
+    z-index: 10;
+  }
   &__title {
     font-size: 16px;
     font-style: normal;

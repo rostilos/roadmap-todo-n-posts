@@ -35,9 +35,7 @@ const CreatePost = function ({ submitCreatePostForm, setShowCreatePostForm, show
             </Form>
           )}
         </Formik>
-        <button type="button" className="_form-popup__close" onClick={() => setShowCreatePostForm(false)}>
-          x
-        </button>
+        <button type="button" className="_form-popup__close" onClick={() => setShowCreatePostForm(false)}></button>
       </div>
     </div>
   );

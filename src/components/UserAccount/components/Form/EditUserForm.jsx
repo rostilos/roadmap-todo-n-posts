@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import ErrorMessage from "../../../Common/Form/ErrorMessage";
 import useAppContext from "../../../../hook/useAppContext";
 import TextInput from "../../../Common/Form/TextInput";
+import DatepickerField from "../../../Common/Form/DatePickerField";
 
 const sixteen_years_ago = dayjs().subtract(16, "year").format("YYYY-MM-DD");
 
@@ -54,13 +55,8 @@ const EditUserForm = function ({ userData }) {
         <Form className="edit-user__form">
           <TextInput label="Firstname" className="_input _input--small-height" name="firstname" />
           <TextInput label="Lastname" className="_input _input--small-height" name="lastname" />
-
-          <label className="_input__label" htmlFor="birth_date">
-            Date of Birth
-          </label>
-          <Field type="date" className="_input _input--small-height" name="birth_date" />
-          <ErrorMessage error={errors.birth_date} touched={touched.birth_date} />
-
+          <DatepickerField label="Date of Birth" className="_input _input--small-height" name="birth_date" />
+          
           <button className="_button" type="submit">
             Submit
           </button>

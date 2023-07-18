@@ -1,7 +1,26 @@
-import { fetchPostViewRequest, fetchAllPostsRequest, createPostRequest } from "../../../api";
+import { fetchPostViewRequest, fetchAllPostsRequest, createPostRequest, fetchRecentPostsRequest } from "../../../api";
 
-import { UPDATE_POSTS_LIST } from "./types";
+import { UPDATE_POSTS_LIST, UPDATE_RECENT_POSTS } from "./types";
 import { isEmpty } from "lodash";
+
+export async function fetchRecentPostsAction(dispatch, query) {
+  try {
+    const response = await fetchRecentPostsRequest(dispatch, query);
+    if (!isEmpty(response?.data)) {
+      dispatch({
+        type: UPDATE_RECENT_POSTS,
+        payload: response?.data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_RECENT_POSTS,
+        payload: {},
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export async function fetchPostsAction(dispatch, query) {
   try {

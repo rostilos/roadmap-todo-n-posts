@@ -7,6 +7,7 @@ import PostList from "../../components/Posts/PostList";
 import useAppContext from "../../hook/useAppContext";
 import usePostsContext from "../../hook/usePostsContext";
 import Toolbar from "../../components/Common/Pagination/Toolbar";
+import { isEmpty } from "lodash";
 
 const options = [
   { value: "DESC", label: "From new To old" },
@@ -85,7 +86,11 @@ const Posts = function () {
         <div className="posts-list__header" style={{ margin: 0 }}>
           <h1 className="page__title">User Posts</h1>
           {isLoggedIn && (
-            <button className="_button posts-list__add-new" type="button" onClick={() => setShowCreatePostForm(!showCreatePostForm)}>
+            <button
+              className="_button posts-list__add-new"
+              type="button"
+              onClick={() => setShowCreatePostForm(!showCreatePostForm)}
+            >
               Add new
             </button>
           )}
@@ -93,24 +98,29 @@ const Posts = function () {
       </div>
 
       <div className="posts-list__sort-toolbar posts-sort-toolbar">
-        <div className="posts-sort-toolbar__checkbox _checkbox-wrapper">
-          <input
-            type="checkbox"
-            className="_checkbox"
-            name="filter_by_user"
-            id="filter_by_user"
-            onChange={handleFilterForUserChange}
-          />
-          <label htmlFor="filter_by_user">Show only my posts</label>
-        </div>
-        <div className="posts-sort-toolbar__select">
-          <Select
-            styles={reactSelectStyles}
-            value={selectedSortOption}
-            onChange={handleSelectChange}
-            options={options}
-          />
-        </div>
+        {isLoggedIn && (
+          <div className="posts-sort-toolbar__checkbox _checkbox-wrapper">
+            <input
+              type="checkbox"
+              className="_checkbox"
+              name="filter_by_user"
+              id="filter_by_user"
+              onChange={handleFilterForUserChange}
+            />
+            <label htmlFor="filter_by_user">Show only my posts</label>
+          </div>
+        )}
+
+        {!isEmpty(data) && (
+          <div className="posts-sort-toolbar__select">
+            <Select
+              styles={reactSelectStyles}
+              value={selectedSortOption}
+              onChange={handleSelectChange}
+              options={options}
+            />
+          </div>
+        )}
       </div>
       {showCreatePostForm && (
         <CreatePost
@@ -119,16 +129,18 @@ const Posts = function () {
           setShowCreatePostForm={setShowCreatePostForm}
         />
       )}
-      {data && <PostList posts={data} />}
-
-      {data && (
-        <Toolbar
-          callbackNext={() => fetchPostsList({ page: pagination?.nextPage, limit: pagination?.limit })}
-          callbackPrev={() => fetchPostsList({ page: pagination?.prevPage, limit: pagination?.limit })}
-          pagination={pagination}
-        />
+      {!isEmpty(data) && (
+        <div>
+          <PostList posts={data} />
+          <Toolbar
+            callbackNext={() => fetchPostsList({ page: pagination?.nextPage, limit: pagination?.limit })}
+            callbackPrev={() => fetchPostsList({ page: pagination?.prevPage, limit: pagination?.limit })}
+            pagination={pagination}
+          />
+        </div>
       )}
-      {!data && (
+
+      {isEmpty(data) && (
         <div className="_section">
           <p>No posts were found for this query</p>
         </div>

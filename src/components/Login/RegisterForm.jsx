@@ -1,8 +1,10 @@
 import React from "react";
 import dayjs from "dayjs";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import ErrorMessage from "../Common/Form/ErrorMessage";
+import TextInput from "../Common/Form/TextInput";
+import PasswordInput from "../Common/Form/PasswordInput";
+import DatepickerField from "../Common/Form/DatePickerField";
 
 const sixteen_years_ago = dayjs().subtract(16, "year").format("YYYY-MM-DD");
 
@@ -14,8 +16,12 @@ const RegisterSchema = Yup.object().shape({
     .required("Please enter the required field")
     .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field "),
   birth_date: Yup.date().max(sixteen_years_ago, "You must be at least 16 years old to register"),
-  password: Yup.string().required("No password provided.").min(6, "Password is too short - should be 6 chars minimum."),
   email: Yup.string().required("No email provided.").email("Invalid email"),
+  password: Yup.string().required("No password provided.").min(6, "Password is too short - should be 6 chars minimum."),
+  password_confirm: Yup.string()
+    .required("Please, confirm Password")
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .typeError("Please provide correct password"),
 });
 
 const initialValues = {
@@ -23,6 +29,7 @@ const initialValues = {
   lastname: "",
   birth_date: "",
   password: "",
+  password_confirm: "",
   email: "",
 };
 
@@ -38,32 +45,12 @@ const RegisterForm = function ({ submitRegisterHandler }) {
       >
         {({ errors, touched }) => (
           <Form className="login-form__form">
-            <label className="_input__label" htmlFor="firstname">Firstname</label>
-            <Field
-              className={`_input ${errors.firstname && touched.firstname ? "_input__error" : ""}`}
-              name="firstname"
-            />
-            <ErrorMessage error={errors.firstname} touched={touched.firstname} />
-
-            <label className="_input__label" htmlFor="lastname">Lastname</label>
-            <Field className={`_input ${errors.lastname && touched.lastname ? "_input__error" : ""}`} name="lastname" />
-            <ErrorMessage error={errors.lastname} touched={touched.lastname} />
-
-            <label className="_input__label" htmlFor="birth_date">Date of Birth</label>
-            <Field type="date" className="_input" name="birth_date" />
-            <ErrorMessage error={errors.birth_date} touched={touched.birth_date} />
-
-            <label className="_input__label" htmlFor="password">Password</label>
-            <Field className={`_input ${errors.password && touched.password ? "_input__error" : ""}`} name="password" />
-            <ErrorMessage error={errors.password} touched={touched.password} />
-
-            <label className="_input__label" htmlFor="email">Email</label>
-            <Field
-              className={`_input ${errors.email && touched.email ? "_input__error" : ""}`}
-              name="email"
-              type="email"
-            />
-            <ErrorMessage error={errors.email} touched={touched.email} />
+            <TextInput label="Firstname" className="_input " name="firstname" />
+            <TextInput label="Lastname" className="_input " name="lastname" />
+            <DatepickerField label="Date of Birth" className="_input" name="birth_date" />
+            <TextInput label="Email" className="_input" type="email" name="email" />
+            <PasswordInput label="Password" className="_input" name="password" />
+            <PasswordInput label="Confirm password" className="_input" name="password_confirm" />
 
             <button className="_button" type="submit">
               Register

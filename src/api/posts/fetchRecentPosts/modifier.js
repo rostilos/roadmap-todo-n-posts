@@ -1,4 +1,4 @@
-export default function fetchNotesModifier(response) {
+export default function fetchRecentPostsModifier(response) {
   const { ...result } = response;
   return {
     ...result,

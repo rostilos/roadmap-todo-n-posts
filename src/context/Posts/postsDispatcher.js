@@ -1,9 +1,10 @@
-import { createPostAction, fetchPostsAction, fetchPostViewAction } from "./posts/actions";
+import { createPostAction, fetchPostsAction, fetchPostViewAction, fetchRecentPostsAction } from "./posts/actions";
 
 const dispatchMapper = {
   createPost: createPostAction,
   fetchPosts: fetchPostsAction,
   fetchPostView: fetchPostViewAction,
+  fetchRecentPosts: fetchRecentPostsAction,
 };
 
 export default function postsDispatcher(dispatch) {

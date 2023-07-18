@@ -29,25 +29,27 @@ const PostView = function () {
   return (
     <div className="page__post-view post-view ">
       <div className="_section">
-        <div className="notes-page__header" style={{ margin: 0 }}>
-          <h1 className="page__title">Article View</h1>
+        <div className="post-view__header" style={{ margin: 0 }}>
+          <h1 className="page__title">Post View</h1>
 
-          <div className="notes-page__button-new">
+          <div className="post-view__button-new">
             <Link className="_button" to="/posts">
-              Back
+              To Posts List
             </Link>
           </div>
         </div>
       </div>
-      <div className="post-view__body _section">
-        <div className="post-view__info">
-          <p className="page__title post-view__title">{title}</p>
-          <p className="post-view__author">Author: {fullname}</p>
+      {!isEmpty(postData) && (
+        <div className="post-view__body _section">
+          <div className="post-view__info">
+            <p className="page__title post-view__title">{title}</p>
+            <p className="post-view__author">Author: {fullname}</p>
 
-          <p className="post-view__content">{content}</p>
-          <p className="post-view__created-at">Posted: {created_at}</p>
+            <p className="post-view__content">{content}</p>
+            <p className="post-view__created-at">Posted: {created_at}</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

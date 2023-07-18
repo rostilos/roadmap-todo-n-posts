@@ -19,6 +19,9 @@
     @media screen and (max-width: $screen-md) {
       font-size: 14px;
     }
+    @media screen and (max-width: $screen-xsm) {
+      font-size: 12px;
+    }
     // transition: $animation;
     &:after {
       content: "";
