@@ -78,7 +78,7 @@ class NotesController extends Controller
             'title' => $requestData['title'],
             'content' => $requestData['content'],
             'priority' => $requestData['priority'],
-            'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y/m/d H:i'),
         ];
 
         if ($this->validator->isContainsEmptyValues($noteData)) {

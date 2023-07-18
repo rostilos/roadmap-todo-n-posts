@@ -14,6 +14,7 @@ return [
         '/api/fetch_users' => 'UserController@getAllUsersData',
         '/api/create_post' => 'PostsController@createPost',
         '/api/fetch_posts' => 'PostsController@getPosts',
+        '/api/fetch_recent_posts' => 'PostsController@getRecentPosts',
         '/api/fetch_post_view' => 'PostsController@getPostById',
     ],
 ];

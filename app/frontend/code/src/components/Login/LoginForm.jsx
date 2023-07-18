@@ -1,10 +1,10 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import ErrorMessage from "../Common/Form/ErrorMessage";
+import TextInput from "../Common/Form/TextInput";
 
 const LoginSchema = Yup.object().shape({
-  password: Yup.string().required("No password provided.").min(4, "Password is too short - should be 8 chars minimum."),
+  password: Yup.string().required("No password provided."),
   email: Yup.string().required("No email provided.").email("Invalid email"),
 });
 
@@ -27,21 +27,8 @@ const LoginForm = function ({ submitLoginHandler }) {
       >
         {({ errors, touched }) => (
           <Form className="login-form__form">
-            <label className="_input__label" htmlFor="email">
-              Email
-            </label>
-            <Field
-              className={`_input ${errors.email && touched.email ? "_input__error" : ""}`}
-              name="email"
-              type="email"
-            />
-            <ErrorMessage error={errors.email} touched={touched.email} />
-
-            <label className="_input__label" htmlFor="password">
-              Password
-            </label>
-            <Field className={`_input ${errors.password && touched.password ? "_input__error" : ""}`} name="password" />
-            <ErrorMessage error={errors.password} touched={touched.password} />
+            <TextInput label="Email" className="_input" type="email" name="email" />
+            <TextInput label="Password" className="_input" type="password" name="password" />
 
             <button className="_button" type="submit">
               Login

@@ -101,6 +101,28 @@ class Post extends Model
     }
 
     /**
+     * Method getting recent posts
+     *
+     * @return array
+     * @access  public
+     */
+
+    public function getRecentPostsCollection()
+    {
+        $query = 'SELECT DISTINCT posts.id, posts.user_id, posts.title, posts.content, posts.created_at, users.firstname, users.lastname ' .
+        'FROM `posts` ' .
+        'LEFT JOIN `users` ' .
+        'ON posts.user_id=users.id ' . 
+        'ORDER BY created_at DESC LIMIT 5 ';
+
+        $rows = $this->DB()
+            ->query($query)
+            ->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $rows ?? [];
+    }
+
+    /**
      * Method getting post by id
      *
      * @param int $id

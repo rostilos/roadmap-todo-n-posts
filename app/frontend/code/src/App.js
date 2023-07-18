@@ -16,9 +16,11 @@ function App() {
         <main className="page__content grid-3-cols">
           <BrowserRouter>
             <Sidebar />
-            <Router />
+            <main className="page__main">
+              <Router />
+            </main>
+            <LastUpdates />
           </BrowserRouter>
-          <LastUpdates />
         </main>{" "}
       </div>
     </div>
