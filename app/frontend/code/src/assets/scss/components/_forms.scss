@@ -16,6 +16,9 @@
   @media screen and (max-width: $screen-md) {
     height: 32px;
   }
+  @media screen and (max-width: $screen-xsm) {
+    min-width: 100px;
+  }
   &__error {
     border: 1px solid $common-red;
   }
@@ -27,7 +30,7 @@
   &__label {
     font-weight: 500;
     display: inline-block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   &:focus {
     border: 2px solid $blue-dark;
@@ -35,7 +38,34 @@
   &--small-height {
     height: 30px;
   }
+
+  // password input specific styles
+  &-wrapper {
+    &--password {
+      width: fit-content;
+      margin-bottom: 16px;
+      position: relative;
+      ._input {
+        margin-bottom: 0;
+        padding-right: 40px;
+      }
+    }
+  }
+  &__password-show {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+
+    transform: translateY(-50%);
+    margin-bottom: 0;
+    img {
+      margin-top: 3px;
+      height: 24px;
+      object-fit: contain;
+    }
+  }
 }
+
 ._textarea {
   box-sizing: border-box;
   background: $blue-transparent;
@@ -138,6 +168,9 @@
     display: inline-block;
     font-weight: 500;
   }
+}
+.react-datepicker-wrapper {
+  display: block !important;
 }
 label {
   cursor: pointer;

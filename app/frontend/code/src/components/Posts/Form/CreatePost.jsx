@@ -26,7 +26,7 @@ const CreatePost = function ({ submitCreatePostForm, setShowCreatePostForm, show
         >
           {({ errors, touched }) => (
             <Form className="_form-popup__form">
-              <TextInput label="Title" name="title" />
+              <TextInput label="title" name="title" />
               <TextArea label="Content" name="content" rows="6" />
 
               <button className="_button" type="submit">
@@ -35,9 +35,7 @@ const CreatePost = function ({ submitCreatePostForm, setShowCreatePostForm, show
             </Form>
           )}
         </Formik>
-        <button type="button" className="_form-popup__close" onClick={() => setShowCreatePostForm(false)}>
-          x
-        </button>
+        <button type="button" className="_form-popup__close" onClick={() => setShowCreatePostForm(false)}></button>
       </div>
     </div>
   );

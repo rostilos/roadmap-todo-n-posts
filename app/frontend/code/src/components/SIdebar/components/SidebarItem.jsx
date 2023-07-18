@@ -1,6 +1,12 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const SidebarItem = function ({ label, icon, path, handleClick, isActive }) {
+  const location = useLocation();
+
+  if (path.includes("/posts") && location.pathname.includes("posts")) {
+    isActive = true;
+  }
   return (
     <div className={`nav-sidebar__item ${isActive ? "nav-sidebar__item--active" : ""}`}>
       <button type="button" onClick={() => handleClick(path)}>

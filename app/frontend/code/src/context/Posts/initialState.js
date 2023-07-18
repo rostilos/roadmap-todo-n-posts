@@ -9,6 +9,7 @@ const initialState = {
       prevPage: null,
     },
   },
+  recentPosts: {},
 };
 
 export default initialState;

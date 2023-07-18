@@ -50,9 +50,7 @@ const CreateNote = function ({ submitCreateNoteForm, setShowNewNoteForm, showNew
             </Form>
           )}
         </Formik>
-        <button type="button" className="_form-popup__close" onClick={() => setShowNewNoteForm(false)}>
-          x
-        </button>
+        <button type="button" className="_form-popup__close" onClick={() => setShowNewNoteForm(false)}></button>
       </div>
     </div>
   );

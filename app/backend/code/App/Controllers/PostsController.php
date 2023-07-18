@@ -56,7 +56,7 @@ class PostsController extends Controller
             'user_id' => $userId,
             'title' => $requestData['title'],
             'content' => $requestData['content'],
-            'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y/m/d H:i'),
         ];
 
         if ($this->validator->isContainsEmptyValues($newPost)) {
@@ -78,7 +78,7 @@ class PostsController extends Controller
      * @return array
      * @access  public
      */
-    // TODO : refactoring this method 
+    // TODO : refactoring this method
     public function getPosts()
     {
         $requestData = $this->getPostData();
@@ -101,7 +101,7 @@ class PostsController extends Controller
             $currentUserOnly = $requestData['userPostsOnly'];
         }
 
-        if($currentUserOnly){
+        if ($currentUserOnly) {
             $bearer_token = $this->jwt->get_bearer_token();
             $is_jwt_valid = isset($bearer_token)
                 ? $this->jwt->is_jwt_valid($bearer_token)
@@ -127,6 +127,22 @@ class PostsController extends Controller
             $this->return_json(null, null, false);
         }
         $this->return_json($posts, null, true);
+    }
+
+    /**
+     * Get last posted posts collection
+     *
+     * @return array
+     * @access  public
+     */
+    public function getRecentPosts()
+    {
+        $requestData = $this->getPostData();
+
+        if (!($posts = $this->postModel->getRecentPostsCollection())) {
+            $this->return_json(null, null, false);
+        }
+        $this->return_json(['data' => $posts], null, true);
     }
 
     /**

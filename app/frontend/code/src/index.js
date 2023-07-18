@@ -9,17 +9,15 @@ import PostsDataProvider from "./context/Posts/PostsDataProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <AppDataProvider>
-      <CommunityDataProvider>
-        <NotesDataProvider>
-          <PostsDataProvider>
-            <App />
-          </PostsDataProvider>
-        </NotesDataProvider>
-      </CommunityDataProvider>
-    </AppDataProvider>
-  </React.StrictMode>
+  <AppDataProvider>
+    <CommunityDataProvider>
+      <NotesDataProvider>
+        <PostsDataProvider>
+          <App />
+        </PostsDataProvider>
+      </NotesDataProvider>
+    </CommunityDataProvider>
+  </AppDataProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

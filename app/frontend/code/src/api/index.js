@@ -13,6 +13,7 @@ import deleteNotesGroup from "./notes/deleteGroup";
 import createPost from "./posts/create";
 import fetchAllPosts from "./posts/fetchAll";
 import fetchPostView from "./posts/fetchPostView";
+import fetchRecentPosts from "./posts/fetchRecentPosts";
 
 
 export const ajaxLoginRequest = ajaxLogin;
@@ -30,3 +31,4 @@ export const deleteNotesGroupRequest = deleteNotesGroup;
 export const createPostRequest = createPost;
 export const fetchAllPostsRequest = fetchAllPosts;
 export const fetchPostViewRequest = fetchPostView;
+export const fetchRecentPostsRequest = fetchRecentPosts;

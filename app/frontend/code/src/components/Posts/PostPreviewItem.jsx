@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const PostPreviewItem = function ({ postData }) {
-  const { id, firstname, lastname, title, content, created_at } = postData;
+  const { id, firstname, lastname, title, created_at } = postData;
   const fullname = `${firstname} ${lastname}`;
-  
+
   return (
     <div className="posts-list__item post-preview _section">
       <div className="post-preview__body">
@@ -17,7 +17,7 @@ const PostPreviewItem = function ({ postData }) {
         </div>
         <div className="post-preview__read-full">
           <Link className="_button" to={`/posts/view/${id}`}>
-            Read Article
+            Read Post
           </Link>
         </div>
       </div>
