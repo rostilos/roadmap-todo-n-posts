@@ -17,7 +17,7 @@ First you need to set read and execute permissions to .sh scripts :
 Then you can run the application: 
 
 ### `cd ./scripts`
-### `./run_app.sh`
+### `sudo ./run_app.sh`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
